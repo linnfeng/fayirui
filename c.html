@@ -1,0 +1,3574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法意瑞13天瑞士四天经典行程</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 添加用于显示/隐藏内容的样式 */
+        .day-content {
+            display: none; /* 默认隐藏所有天的内容 */
+        }
+        .day-content.active {
+            display: block; /* 显示活动天的内容 */
+        }
+        
+        /* 添加红色高亮关键词样式 */
+        .highlight {
+            color: #c00000;
+            font-weight: bold;
+        }
+        
+        /* 添加餐食和交通信息样式 */
+        .meal-transport-info {
+            background-color: #f8f8f8;
+            border-left: 4px solid #c00000;
+            padding: 12px 15px;
+            margin: 10px 0 20px;
+            font-size: 0.95rem;
+            color: #333;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .meal-transport-info p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .navigation-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            background-color: #f8f8f8;
+            border-radius: 10px;
+            padding: 10px 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: #c00000;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-width: 100px;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            background-color: #900000;
+        }
+        
+        .prev-btn i {
+            margin-right: 8px;
+        }
+        
+        .next-btn i {
+            margin-left: 8px;
+        }
+        
+        .day-indicator {
+            display: flex;
+            align-items: baseline;
+            font-size: 1.1rem;
+        }
+        
+        .current-day {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #c00000;
+            margin-right: 5px;
+        }
+        
+        .total-days {
+            color: #333333;
+            opacity: 0.7;
+        }
+        
+        .nav-arrow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .nav-arrow:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background-color: var(--accent-color);
+        }
+        
+        .nav-arrow i {
+            font-size: 1.5rem;
+        }
+        
+        .day-indicator {
+            background-color: var(--secondary-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .day-indicator span {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        /* 添加活动选项样式 */
+        .activity-options {
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        
+        .activity-options h4 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .activity-option {
+            margin-bottom: 18px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+        
+        .activity-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .activity-option h5 {
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            color: #222;
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-option h5 i {
+            margin-right: 8px;
+            color: #c00000;
+        }
+        
+        .activity-option p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .activity-option p.notice {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 8px;
+        }
+        
+        /* 餐厅推荐样式 */
+        .dining-recommendations {
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        
+        .dining-recommendations h4 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .restaurant {
+            margin-bottom: 18px;
+            padding: 12px;
+            background-color: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        
+        .restaurant h5 {
+            font-size: 1.05rem;
+            margin-bottom: 10px;
+            color: #c00000;
+        }
+        
+        .restaurant p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+
+        /* 背景图片样式 */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        i {
+            display: block;
+        }
+        .bg-image.active {
+            opacity: 0.7;
+        }
+        
+        /* 内容容器透明度 */
+        .container {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 30px;
+        }
+
+        /* 移动端默认样式 (取消固定定位) */
+        .day-nav {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            position: relative; /* 移动端默认不固定 */
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* PC端固定在顶部 */
+        @media (min-width: 768px) {
+            .day-nav {
+                position: fixed;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 1200px;
+                z-index: 1000;
+            }
+            
+            /* 为固定导航条添加内容间距，防止内容被导航条遮挡 */
+            body {
+                padding-top: 70px;
+            }
+        }
+
+        /* 针对 day-nav-btn 的一些基础样式 (确保它们在移动端和桌面端看起来一致) */
+        .day-nav-btn {
+            padding: 8px 12px;
+            border: none;
+            background-color: #e0e0e0;
+            color: #333;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, color 0.3s;
+            flex-shrink: 0; /* 防止按钮被过度压缩 */
+        }
+
+        .day-nav-btn.active,
+        .day-nav-btn:hover {
+            background-color: #c00000;
+            color: white;
+        }
+
+        /* Day Content Text Expansion (Mobile First) */
+        .timeline-content .description-text {
+            position: relative;
+            max-height: 6em; /* 大约 3-4 行, 根据字体大小调整 */
+            overflow: hidden;
+            margin-bottom: 5px; /* 与按钮的间距 */
+            transition: max-height 0.3s ease-out;
+        }
+
+        /* Fade-out effect for collapsed text on mobile */
+        .timeline-content .description-text::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1.5em; /* 渐变高度 */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%); /* 根据背景色调整 */
+            pointer-events: none; /* 允许点击下方的按钮 */
+        }
+        .timeline-content.dark-mode .description-text::after { /* 如果有暗色模式，也需要调整 */
+             background: linear-gradient(to bottom, rgba(51, 51, 51, 0) 0%, rgba(51, 51, 51, 1) 100%);
+        }
+
+
+        .read-more-btn {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 0.85rem;
+            color: #c00000;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .read-more-btn:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Expanded state on mobile */
+        .timeline-content.expanded .description-text {
+            max-height: 1000px !important; /* 设置一个足够大的值 */
+        }
+        .timeline-content.expanded .description-text::after {
+            display: none; /* Hide fade-out when expanded */
+        }
+
+        /* Hide button and remove height limit on larger screens */
+        @media (min-width: 768px) {
+            .timeline-content .description-text {
+                max-height: none;
+                overflow: visible;
+            }
+             .timeline-content .description-text::after {
+                 display: none;
+             }
+            .read-more-btn {
+                display: none;
+            }
+        }
+
+        /* Redesigned Highlights Section Styles */
+        .country-highlights-section {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.95); /* Slightly more opaque background */
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .country-highlights-section h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color, #c00000);
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color, #c00000);
+            display: flex;
+            align-items: center;
+        }
+        .country-highlights-section h2 i {
+            margin-right: 12px;
+            font-size: 1.6rem;
+        }
+
+
+        .country-highlights-section .duration {
+            font-size: 1rem;
+            color: #555;
+            margin-left: 15px;
+            font-weight: normal;
+        }
+
+        .country-highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .highlight-detail-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid var(--accent-color, #e0a000); /* Use accent color or primary */
+        }
+         /* Alternate border colors */
+         .country-highlights-section[data-country="italy"] .highlight-detail-card { border-left-color: #006400; } /* Green for Italy */
+         .country-highlights-section[data-country="switzerland"] .highlight-detail-card { border-left-color: #007bff; } /* Blue for Switzerland */
+         .country-highlights-section[data-country="paris"] .highlight-detail-card { border-left-color: #6f42c1; } /* Purple for Paris */
+
+
+        .highlight-detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-detail-card h4 {
+            font-size: 1.15rem;
+            color: #333;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-detail-card h4 i {
+            margin-right: 10px;
+            color: var(--primary-color, #c00000);
+             width: 20px; /* Fixed width for icon alignment */
+             text-align: center;
+        }
+
+        .highlight-detail-card p,
+        .highlight-detail-card ul {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 0;
+        }
+
+        .highlight-detail-card ul {
+            padding-left: 25px;
+            margin-top: 10px;
+        }
+        .highlight-detail-card ul li {
+            margin-bottom: 5px;
+        }
+
+        /* Adjust icon colors per country */
+        .country-highlights-section[data-country="italy"] .highlight-detail-card h4 i { color: #006400; }
+        .country-highlights-section[data-country="switzerland"] .highlight-detail-card h4 i { color: #007bff; }
+        .country-highlights-section[data-country="paris"] .highlight-detail-card h4 i { color: #6f42c1; }
+
+
+        /* ... existing styles like @media queries ... */
+
+        /* 万神殿 */
+
+        /* ... existing styles ... */
+
+        /* Enhanced Highlight Detail Card Styles */
+        .highlight-detail-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Slightly stronger shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden; /* Ensure image corners are rounded */
+            display: flex; /* Use flexbox for better structure */
+            flex-direction: column; /* Stack image, content vertically */
+            border: none; /* Remove the left border, image is primary visual */
+        }
+
+        .highlight-detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .highlight-detail-card img.highlight-image {
+            width: 100%;
+            height: 180px; /* Adjust height as needed */
+            object-fit: cover; /* Crop image nicely */
+            display: block;
+        }
+
+        .highlight-detail-card .card-content {
+             padding: 15px 20px 20px; /* Add padding for content */
+             flex-grow: 1; /* Allow content to take remaining space */
+             display: flex;
+             flex-direction: column;
+         }
+
+
+        .highlight-detail-card h4 {
+            font-size: 1.1rem; /* Slightly smaller title */
+            color: #333;
+            margin-bottom: 8px; /* Reduced margin */
+            display: flex;
+            align-items: center;
+            line-height: 1.3;
+        }
+
+        .highlight-detail-card h4 i {
+            margin-right: 8px;
+            color: var(--primary-color, #c00000);
+            width: 18px; /* Adjust icon width */
+            text-align: center;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+
+        /* Apply country-specific icon colors (keep this) */
+        .country-highlights-section[data-country="italy"] .highlight-detail-card h4 i { color: #006400; }
+        .country-highlights-section[data-country="switzerland"] .highlight-detail-card h4 i { color: #007bff; }
+        .country-highlights-section[data-country="paris"] .highlight-detail-card h4 i { color: #6f42c1; }
+
+         /* Style for tags within highlight cards */
+         .highlight-detail-card .tags {
+             margin-top: 10px; /* Space between text and tags */
+             margin-bottom: 5px; /* Space below tags */
+             display: flex;
+             flex-wrap: wrap;
+             gap: 6px;
+         }
+
+         /* Reuse existing tag styles if they look good, or define specific ones */
+         .highlight-detail-card .tag {
+             font-size: 0.75rem; /* Smaller tags */
+             padding: 3px 8px;
+             border-radius: 12px;
+             background-color: #f0f0f0;
+             color: #555;
+             white-space: nowrap;
+         }
+         /* Optional: Style specific tag types differently if needed */
+        .highlight-detail-card .tag-included { background-color: #d4edda; color: #155724; }
+        .highlight-detail-card .tag-experience { background-color: #cce5ff; color: #004085; }
+        .highlight-detail-card .tag-unesco { background-color: #fff3cd; color: #856404; }
+        .highlight-detail-card .tag-scenic { background-color: #d1ecf1; color: #0c5460; }
+        .highlight-detail-card .tag-vip { background-color: #e2d9f3; color: #4d2a8a; }
+        .highlight-detail-card .tag-guide { background-color: #f8d7da; color: #721c24; }
+        .highlight-detail-card .tag-free { background-color: #e9ecef; color: #495057; }
+
+
+        .highlight-detail-card p {
+            font-size: 0.9rem; /* Slightly smaller text */
+            line-height: 1.5;
+            color: #666; /* Lighter text color */
+            margin-bottom: 0;
+            flex-grow: 1; /* Allow text to push tags down */
+        }
+
+        /* Adjust grid gap if needed */
+        .country-highlights-grid {
+            gap: 25px; /* Increase gap slightly */
+        }
+
+        /* ... existing styles like @media queries ... */
+        
+        /* 添加展开/折叠功能的样式 */
+        .timeline-content .description-text {
+            overflow: hidden;
+            max-height: 6em; /* 默认显示约3-4行 */
+            transition: max-height 0.3s ease;
+        }
+        
+        .timeline-content.expanded .description-text {
+            max-height: 1000px !important; /* 展开后的最大高度，足够显示完整内容 */
+        }
+        
+        .read-more-btn {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            color: #666;
+            font-size: 0.85rem;
+            padding: 3px 12px;
+            margin-top: 8px;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .read-more-btn:hover {
+            background-color: #e9ecef;
+        }
+
+        /* ... existing styles ... */
+
+        /* 为所有标签添加背景颜色 */
+        .tag {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background-color: #f0f0f0; /* 默认背景色 */
+            color: #555; /* 默认文字颜色 */
+            white-space: nowrap;
+            display: inline-block;
+            margin: 2px;
+        }
+
+        /* 标签样式 - 所有区域通用（增强对比度） */
+        .tag-included { background-color: #d4edda; color: #0a3622; } /* 深绿色文字 */
+        .tag-experience { background-color: #cce5ff; color: #002752; } /* 深蓝色文字 */
+        .tag-unesco { background-color: #fff3cd; color: #533f04; } /* 更深的黄褐色 */
+        .tag-scenic { background-color: #d1ecf1; color: #0c5460; } /* 保持不变，对比度好 */
+        .tag-vip { background-color: #e2d9f3; color: #3a1f71; } /* 更深的紫色 */
+        .tag-guide { background-color: #f8d7da; color: #721c24; } /* 保持不变，对比度好 */
+        .tag-free { background-color: #e9ecef; color: #1b1e21; } /* 更深的灰色 */
+
+        /* 更多标签样式（增强对比度） */
+        .tag-inside { background-color: #c6f6d5; color: #1a4031; } /* 深绿色 */
+        .tag-outside { background-color: #e9d8fd; color: #3c2a6a; } /* 深紫色 */
+        .tag-landmark { background-color: #fed7d7; color: #63171b; } /* 深红色 */
+        .tag-movie { background-color: #fefcbf; color: #533f04; } /* 深黄棕色 */
+        .tag-romantic { background-color: #fed7e2; color: #702459; } /* 保持不变 */
+        .tag-architecture { background-color: #b2f5ea; color: #1d4044; } /* 深青色 */
+        .tag-meal { background-color: #fbd38d; color: #652b19; } /* 深棕色 */
+        .tag-transport { background-color: #bee3f8; color: #1a365d; } /* 深蓝色 */
+        .tag-walking { background-color: #c6f6d5; color: #1c4532; } /* 深绿色 */
+        .tag-time { background-color: #e2e8f0; color: #1a202c; } /* 深灰色 */
+        .tag-location { background-color: #FF5722; color: #521b41; } /* 深粉色 */
+        .tag-activity { background-color: #b2f5ea; color: #1d4044; } /* 深青色 */
+        .tag-hotel { background-color: #c3dafe; color: #2a2f4c; } /* 深靛蓝色 */
+        .tag-view { background-color: #5FAF54; color: #1e3a5f; } /* 深蓝色 */
+        .tag-comfort { background-color: #fbd38d; color: #652b19; } /* 深棕色 */
+        .tag-optional { background-color: #cbd5e0; color: #2d3748; } /* 深灰色 */
+        .tag-hiking { background-color: #9ae6b4; color: #1c4532; } /* 深绿色 */
+        .tag-shopping { background-color: #feb2b2; color: #742a2a; } /* 保持不变 */
+        .tag-culture { background-color: #d6bcfa; color: #3c2a6a; } /* 深紫色 */
+        .tag-service { background-color: #b2f5ea; color: #1d4044; } /* 深青色 */
+        .tag-process { background-color: #e2e8f0; color: #1a202c; } /* 深灰色 */
+        .tag-end { background-color: #fc8181; color: #5c1212; } /* 更深的红色 */
+        .tag-memory { background-color: #fbb6ce; color: #521b41; } /* 深粉色 */
+        .tag-historic { background-color: #ecc94b; color: #533f04; } /* 深黄棕色 */
+        .tag-cultural { background-color: #d6bcfa; color: #3c2a6a; } /* 深紫色 */
+        .tag-famous { background-color: #f687b3; color: #702459; } /* 保持不变 */
+        .tag-facility { background-color: #3F51B5; color: #1e3a5f; } /* 深蓝色 */
+        .tag-plan { background-color: #e2e8f0; color: #1a202c; } /* 深灰色 */
+        .tag-explore { background-color: #9ae6b4; color: #1c4532; } /* 深绿色 */
+        .tag-food { background-color: #fbd38d; color: #652b19; } /* 深棕色 */
+        .tag-rest { background-color: #c3dafe; color: #2a2f4c; } /* 深靛蓝色 */
+        .tag-prepare { background-color: #e2e8f0; color: #1a202c; } /* 深灰色 */
+    </style>
+</head>
+<body>
+    <!-- 背景图片元素，默认为隐藏 -->
+    <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="" class="bg-image active" id="bg-image-highlights" data-day="highlights">
+    <img src="" alt="" class="bg-image" id="bg-image-1" data-day="1">
+    <img src="" alt="" class="bg-image" id="bg-image-2" data-day="2">
+    <img src="" alt="" class="bg-image" id="bg-image-3" data-day="3">
+    <img src="" alt="" class="bg-image" id="bg-image-4" data-day="4">
+    <img src="" alt="" class="bg-image" id="bg-image-5" data-day="5">
+    <img src="" alt="" class="bg-image" id="bg-image-6" data-day="6">
+    <img src="" alt="" class="bg-image" id="bg-image-7" data-day="7">
+    <img src="" alt="" class="bg-image" id="bg-image-8" data-day="8">
+    <img src="" alt="" class="bg-image" id="bg-image-9" data-day="9">
+    <img src="" alt="" class="bg-image" id="bg-image-10" data-day="10">
+    <img src="" alt="" class="bg-image" id="bg-image-11" data-day="11">
+    <img src="" alt="" class="bg-image" id="bg-image-12" data-day="12">
+    <img src="" alt="" class="bg-image" id="bg-image-13" data-day="13">
+    
+    <!-- 天数导航按钮 - 移到容器外面 -->
+    <nav class="day-nav">
+        <button class="day-nav-btn active" data-day="highlights">行程精华</button>
+        <button class="day-nav-btn" data-day="1">第1天</button>
+        <button class="day-nav-btn" data-day="2">第2天</button>
+        <button class="day-nav-btn" data-day="3">第3天</button>
+        <button class="day-nav-btn" data-day="4">第4天</button>
+        <button class="day-nav-btn" data-day="5">第5天</button>
+        <button class="day-nav-btn" data-day="6">第6天</button>
+        <button class="day-nav-btn" data-day="7">第7天</button>
+        <button class="day-nav-btn" data-day="8">第8天</button>
+        <button class="day-nav-btn" data-day="9">第9天</button>
+        <button class="day-nav-btn" data-day="10">第10天</button>
+        <button class="day-nav-btn" data-day="11">第11天</button>
+        <button class="day-nav-btn" data-day="12">第12天</button>
+        <button class="day-nav-btn" data-day="13">第13天</button>
+        <!-- 后续天数按钮将在此处添加 -->
+    </nav>
+    
+    <div class="container">
+        <!-- 行程精华内容 -->
+        <div id="day-highlights-content" class="day-content active">
+            <header class="day-header">
+                <h1>法意瑞13天 · 行程精华概览</h1>
+                <div class="day-intro">
+                    <p>本次旅程精心策划，带您深入体验意大利的古典艺术与生活、瑞士的壮丽高山与湖泊、以及巴黎的浪漫文化与时尚。每一站都包含经典必游与特色体验。</p>
+                </div>
+            </header>
+
+            <!-- 意大利段 -->
+            <section class="country-highlights-section" data-country="italy">
+                <h2><i class="fas fa-flag-checkered"></i>意大利精华 <span class="duration">(5天5晚)</span></h2>
+                <p>从古罗马的辉煌到文艺复兴的艺术，再到水城与时尚之都的魅力，感受意大利的多元精彩。含罗马半日自由活动。</p>
+                <div class="country-highlights-grid">
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-archway"></i>罗马斗兽场 (入内)</h4>
+                        <p>参观世界中古七大奇迹之一，专业地陪8小时深度讲解，感受古罗马的宏伟与历史。</p>
+                    </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-landmark"></i>比萨斜塔 (外观)</h4>
+                        <p>在奇迹广场，与世界闻名的比萨斜塔合影，留下经典"推塔"照片。</p>
+                    </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-church"></i>佛罗伦萨圣母百花 (入内+登顶)</h4>
+                        <p>含大教堂、洗礼堂、博物馆三联票及乔托钟楼登顶，全方位感受文艺复兴魅力。</p>
+                    </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-water"></i>威尼斯水城体验</h4>
+                        <p>深度半日City Walk (赤足桥至总督宫)，并乘坐特色贡多拉游船，穿梭水巷。</p>
+                    </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-shopping-bag"></i>时尚米兰</h4>
+                        <p>入内参观宏伟的米兰大教堂，并在"米兰客厅"埃马努埃莱二世长廊及名品街预留半日自由购物时间。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 瑞士段 -->
+            <section class="country-highlights-section" data-country="switzerland">
+                <h2><i class="fas fa-snowflake"></i>瑞士精华 <span class="duration">(4天4晚)</span></h2>
+                <p>探访瑞士经典线路，连住因特拉肯酒店3晚，沉浸式体验阿尔卑斯的湖光山色与户外乐趣。</p>
+                <div class="country-highlights-grid">
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-train"></i>金色山口列车</h4>
+                        <p>体验瑞士经典景观列车，穿越阿尔卑斯山脉，饱览日内瓦湖区的湖光山色。</p>
+                        </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-ship"></i>布里恩茨湖游船</h4>
+                        <p>乘船游览"蓝宝石湖"，欣赏雪山倒映、森林环绕的如画风景。</p>
+                            </div>
+                     <div class="highlight-detail-card">
+                        <h4><i class="fas fa-map-marker-alt"></i>龙疆小镇</h4>
+                        <p>深度停留1.5-2小时，在风景如画的湖边小镇享受悠闲时光。</p>
+                            </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-mountain"></i>登顶少女峰</h4>
+                        <p>乘坐百年齿轨火车，抵达"欧洲之巅"火车站，俯瞰阿尔卑斯震撼全景。</p>
+                        </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-camera-retro"></i>梦幻山坡 (格林德瓦)</h4>
+                        <p>探访"瑞士最佳机位"，在艾格峰下捕捉阿尔卑斯山谷的经典美景。</p>
+                    </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-waterfall"></i>施陶河瀑布</h4>
+                        <p>观赏劳特布伦嫩山谷的标志性瀑布，瑞士第二高瀑布的壮观景象。</p>
+                        </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-hiking"></i>First山户外体验</h4>
+                        <p>乘坐缆车登临First山，可选徒步或自费体验滑板车等项目，感受户外乐趣。</p>
+                            </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-vihara"></i>湖畔双珠：施皮茨 & 图恩</h4>
+                        <p>游览图恩湖畔的迷人小镇施皮茨，感受"瑞士里维埃拉"的魅力，并探访图恩镇。</p>
+                            </div>
+                     <div class="highlight-detail-card">
+                        <h4><i class="fas fa-parachute-box"></i>因特拉肯自由时光</h4>
+                        <p>上午半日自由活动（9:00-12:00），可选刺激滑翔伞或在酒店享受湖景。</p>
+                        </div>
+                    </div>
+            </section>
+
+            <!-- 巴黎段 -->
+            <section class="country-highlights-section" data-country="paris">
+                 <h2><i class="fas fa-landmark"></i>巴黎精华 <span class="duration">(市中心连住2晚)</span></h2>
+                 <p>在世界浪漫之都，深入艺术殿堂，感受法式优雅与文化底蕴，并享有一天完全自由探索的时间。</p>
+                 <div class="country-highlights-grid">
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-university"></i>卢浮宫 (VIP+讲解)</h4>
+                        <p>升级VIP通道及2小时官方人工讲解，深度探索世界级艺术宝库。</p>
+                        </div>
+                    <div class="highlight-detail-card">
+                        <h4><i class="fas fa-chess-king"></i>凡尔赛宫 (VIP+讲解)</h4>
+                        <p>升级VIP通道及2小时官方人工讲解，领略法国皇家宫殿的极致奢华。</p>
+                            </div>
+                    <div class="highlight-detail-card">
+                         <h4><i class="fas fa-theater-masks"></i>巴黎歌剧院 (入内)</h4>
+                         <p>参观富丽堂皇的加尼叶歌剧院，欣赏巴洛克建筑艺术的杰作 (开放时间10:00-17:00)。</p>
+                            </div>
+                    <div class="highlight-detail-card">
+                         <h4><i class="fas fa-church"></i>巴黎圣母院 (入内*)</h4>
+                         <p>探访哥特式建筑的里程碑 (*预计2024年底重开，具体以届时为准，如未开放则外观)。</p>
+                        </div>
+                    <div class="highlight-detail-card">
+                         <h4><i class="fas fa-bed"></i>市中心连住两晚</h4>
+                         <p>精选小巴黎范围内酒店，交通便利，方便探索城市。</p>
+                    </div>
+                    <div class="highlight-detail-card">
+                         <h4><i class="fas fa-map-signs"></i>巴黎一日自由行</h4>
+                         <p>全天自由安排，可深度购物、参观博物馆或漫步街区，感受个性巴黎。</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- 底部导航保持不变 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev" style="visibility: hidden;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一页</span>
+                </a>
+                <div class="day-indicator">
+                    <span>行程精华</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>第1天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 1 内容 -->
+        <div id="day-1-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 1 - 国内✈罗马（住罗马）</h1>
+                <div class="day-intro">
+                    <p>今日为集合日，根据您的航班时间，我们会提前安排好接机服务。因不同航班到达时间不同，司机和导游会按照航班到达的时间对行程进行一定调整。今日我们是集合日，不安排固定行程，让您有充分的时间调整时差，适应当地环境。如果您是早上的航班抵达，推荐参加梵蒂冈半日游。</p>
+                </div>
+            </header>
+
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-plane-arrival"></i>
+                        <h3>专业接机</h3>
+                        <p>根据航班动态，专人专车接送</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-clock"></i>
+                        <h3>自由调整</h3>
+                        <p>全天自由安排，轻松调整时差</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-church"></i>
+                        <h3>可选梵蒂冈游</h3>
+                        <p>早班机抵达可选择梵蒂冈深度半日游</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-bed"></i>
+                        <h3>舒适住宿</h3>
+                        <p>入住拿破仑酒店或同级，位置便利</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 抵达 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>抵达</h3>
+                            <span>集合日</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>抵达罗马 - 专人接机</h3>
+                            <div class="tags">
+                                <span class="tag tag-service">接机服务</span>
+                                <span class="tag tag-transport">私人接送</span>
+                            </div>
+                            <p>今日为集合日，根据您的航班时间，我们会提前安排好接机服务。因不同航班到达时间不同，司机和导游会按照航班到达的时间对接下来的行程进行一定调整。今日我们是集合日，不安排固定行程，让您有充分的时间调整时差，适应当地环境。</p>
+                            <div class="service-highlights">
+                                <div class="service-item">
+                                    <i class="fas fa-car"></i>
+                                    <span>舒适接送</span>
+                                    <p>专业司机，舒适座驾迎接您的到来</p>
+                                </div>
+                                <div class="service-item">
+                                    <i class="fas fa-heart"></i>
+                                    <span>贴心服务</span>
+                                    <p>根据航班动态调整接机时间，免除等待</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 可选行程 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午/下午</h3>
+                            <span>可选行程</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://snzovoyage.com/wp-content/uploads/2023/07/cbd1f4b8eead9029c75b255a219bec53-Vatican-city--scaled.jpeg" alt="梵蒂冈圣彼得教堂">
+                            </div>
+                            <h3>梵蒂冈半日深度游（可选）</h3>
+                            <div class="tags">
+                                <span class="tag tag-optional">自选项目</span>
+                                <span class="tag tag-guide">中文讲解</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-unesco">世界遗产</span>
+                            </div>
+                            <p>如果您是早上的航班抵达罗马，我们推荐您可以参加FDG博物馆+圣彼得教堂+西斯廷的半日深度游。梵蒂冈博物馆珍藏着世界上最重要的艺术品收藏之一，圣彼得教堂是天主教的核心圣地，而西斯廷教堂则以米开朗基罗的天顶画《创世纪》闻名于世。这个半日深度游将带您领略梵蒂冈的艺术与宗教魅力。</p>
+                            <div class="price-info">
+                                <h4>费用说明：</h4>
+                                <ul>
+                                    <li>门票价格：20欧+5欧代订费=25欧（旺季可能需要预定黄牛票，约60欧）</li>
+                                    <li>中文讲解VIP团（拼团）价格预计为598元/位</li>
+                                    <li>需要提前报名，旺季价格会有波动</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 自由时间 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>自由时间</h3>
+                            <span>休息调整</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/13/f6/fc/photo1jpg.jpg?w=900&h=500&s=1" alt="罗马街景">
+                            </div>
+                            <h3>自由探索或休息</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-rest">调整时差</span>
+                            </div>
+                            <p>根据您的航班抵达时间和个人精力状况，您可以选择在酒店休息调整时差，或者自行探索酒店周边环境。我们的酒店位于交通便利的位置，方便您初步感受罗马的氛围，为接下来的旅程做好准备。</p>
+                        </div>
+                    </div>
+
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>傍晚/入夜</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://ac-a.static.booking.cn/xdata/images/hotel/max1024x768/399806502.jpg?k=e4d481ae5603efc1765063f146e0647cde0bf010bc44a9c19e85ab7c58a15714&o=&hp=1" alt="酒店">
+                            </div>
+                            <h3>入住罗马酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">品质住宿</span>
+                                <span class="tag tag-location">便捷位置</span>
+                            </div>
+                            <p>入住拿破仑酒店(Hotel Napoleon)或同级别酒店（以出团通知书为准）。酒店将让您体验到罗马（Rome）安静的居住环境，距离礼堂（Auditorium）、奥林匹克体育场（Olympic Stadium）和古罗马广场（Foro Italico）有10分钟的车程，提供到市中心的良好交通连接。酒店配备现代化设施，为您的罗马之旅提供舒适的居住体验。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-1-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev" style="visibility: hidden;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">1</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 2 内容 -->
+        <div id="day-2-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 2 - 罗马深度游（住罗马）</h1>
+                <div class="day-intro">
+                    <p>今天将在中文向导的带领下，深度探索永恒之城罗马。上午我们将参观罗马斗兽场、真理之口、许愿池和万神殿等经典地标。下午您可以选择自由活动，探索更多罗马的魅力，如参观梵蒂冈博物馆或圣依纳爵堂，或者在西班牙广场附近感受罗马的时尚与活力。晚上继续入住罗马市中心酒店。</p>
+                </div>
+            </header>
+    
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-landmark"></i>
+                        <h3>经典地标游</h3>
+                        <p>斗兽场(入内)、真理之口、许愿池、万神殿(入内)</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-user-tie"></i>
+                        <h3>专业向导服务</h3>
+                        <p>8小时中文向导陪同讲解，深入了解罗马</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-walking"></i>
+                        <h3>City Walk + 自由探索</h3>
+                        <p>上午深度City Walk，下午自由活动至17:00</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-bed"></i>
+                        <h3>市中心连住</h3>
+                        <p>继续入住拿破仑酒店或同级，位置优越</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 时间线开始点 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>9:00 AM</h3>
+                            <span>旅程开始</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>与向导会合，开启罗马City Walk</h3>
+                            <div class="tags">
+                                <span class="tag tag-service">中文向导服务</span>
+                                <span class="tag tag-transport">步行+出租车/公交(AA)</span>
+                            </div>
+                            <p>早上9点，我们的中文向导将在酒店大堂与您会合，开启一天的罗马深度City Walk。今日将以步行和出租车/公共交通相结合的方式游览（交通费用AA），让您以最舒适的节奏感受这座古城的魅力。向导将提供专业讲解，带您走进罗马的历史与文化。</p>
+                            <div class="service-highlights">
+                                <div class="service-item">
+                                    <i class="fas fa-language"></i>
+                                    <span>中文陪同</span>
+                                    <p>全程管家式服务，保障您的出行</p>
+                                </div>
+                                <div class="service-item">
+                                    <i class="fas fa-heart"></i>
+                                    <span>灵活安排</span>
+                                    <p>结合团队节奏与个人兴趣，灵活调整</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 斗兽场 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>第一站</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://vatican.museum/images/w800-f1/storage/app/public/repository/4/42af26e075824cbab929b1be24d461e0.jpg" alt="罗马斗兽场">
+                            </div>
+                            <h3>罗马斗兽场</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-unesco">世界遗产</span>
+                            </div>
+                            <p>罗马角斗场为<span class="highlight">古罗马的象征</span>，建于公元72-79年，强迫8万名犹太俘虏作劳役，用工8年完成。整个建筑占地<span class="highlight">2万平方米</span>，可容纳<span class="highlight">9万观众</span>。它是罗马帝国征服耶路撒冷后，为纪念皇帝威斯巴西安的丰功伟绩而建的，甚至一直影响着现代大型体育场的建筑。当您站在这座伟大的建筑前，仿佛能听到观众的欢呼和角斗士的呐喊，感受帝国时代的荣光与残酷。1980年，古罗马斗兽场、古罗马广场遗迹作为罗马历史中心的一部分，被联合国教科文组织世界遗产委员会作为<span class="highlight">文化遗产</span>列入《世界遗产名录》。中文向导将陪同入内讲解。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 真理之口 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>第二站</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://img0.baidu.com/it/u=3090763383,3067139822&fm=253&fmt=auto&app=138&f=JPEG?w=750&h=500" alt="真理之口">
+                            </div>
+                            <h3>真理之口</h3>
+                            <div class="tags">
+                                <span class="tag tag-movie">电影同款</span>
+                                <span class="tag tag-outside">外观参观</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                            </div>
+                            <p>真理之口是一块雕刻着海神波塞冬(Poseidon)的儿子特里同(Triton)头像的圆盘，上面有鼻有眼，张开一张大嘴，安放在科斯美汀圣母教堂（Santa Maria in Cosmedin）入口处。提到真理之口，游客一定会想到由格里高利·派克与奥黛丽·赫本在1953年主演的电影《罗马假日》。真理之口就是因这部电影而名声大噪。据说把手放在他的嘴里，如果说谎就没办法拔出来，所以也就成了如今名扬海外的罗马本土"测谎仪"。您可以亲自体验这个有趣的传统，拍摄难忘的照片，重现电影中的经典场景。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 许愿池 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>第三站</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://img.knetreg.cn/group4/M00/3F/CB/yq0KYF3nJamAYFY0AAVwM8U6XDY576.jpg" alt="许愿池">
+                            </div>
+                            <h3>特莱维喷泉（许愿池）</h3>
+                            <div class="tags">
+                                <span class="tag tag-movie">电影同款</span>
+                                <span class="tag tag-outside">外观参观</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-romantic">浪漫体验</span>
+                            </div>
+                            <p>跟随著名影星奥黛丽·赫本的脚步，沿着再熟悉不过的影片《罗马假日》中的路线，在罗马这个既充满文化气息又罗曼蒂克的古都，过一个完整的阳光假日：站在阳光下的在西班牙阶梯上，想起电影里俏皮可爱的赫本在附近闲逛，在许愿泉投下一枚硬币，期待再次来罗马。特莱维喷泉是巴洛克风格的杰作，巨大的海神涅普顿雕像矗立在中央，周围环绕着繁复精美的雕塑。传统上，游客背对喷泉抛出一枚硬币许愿，意味着未来还会再回到罗马。这里日夜都有游客络绎不绝，是罗马最著名的景点之一。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 万神殿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>第四站</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://www.bring-you.info/imgs/2023/01/roma-pantheon-4.jpg" alt="万神殿">
+                            </div>
+                            <h3>万神殿</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-architecture">建筑奇迹</span>
+                            </div>
+                            <p>被称为"古罗马最美的遗迹，一座保存完好的神庙。"19世纪法国著名作家司汤达（Stendhal）这样描述到，"它看起来就像罗马人在他们的时代所看到的那样。"这座见证了无数战争与时代变革的建筑有着与其历史及艺术地位相契合的身份——即万神殿。作为古罗马建筑的杰作，万神殿的圆顶设计影响了后世无数建筑。中央圆顶顶部的\"眼睛\"开口是唯一的光源，当阳光穿过这个开口照射进来，创造出神奇的光影效果。步入其中，您会被其庄严肃穆的氛围所震撼，感受到古罗马建筑工艺的精湛与创新。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 午餐&下午自由活动 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>自由探索</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>下午自由活动 & 推荐景点</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-guide">向导陪同至17:00</span>
+                                <span class="tag tag-optional">推荐选项</span>
+                            </div>
+                            <p>上午的讲解大约在下午1点左右结束，之后为自由活动时间，中文向导将陪同至下午5点。您可以自行安排行程，或参考以下推荐：</p>
+                            <div class="activity-options">
+                                <h4>下午推荐活动：</h4>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-university"></i> 梵蒂冈博物馆</h5>
+                                    <p>世界顶级博物馆之一，建议预订13:00-13:30场次。可提供门票代订服务（旺季黄牛票约60欧/人，正常票价25欧/人）。如需人工讲解，可安排拼团（约598元/人）。</p>
+                        </div>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-church"></i> 罗马圣依纳爵堂</h5>
+                                    <p>17世纪耶稣会教堂，以其壮观的穹顶壁画闻名。免费入场，禁止闪光灯。（开放时间：9:00-23:30）</p>
+                    </div>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-shopping-cart"></i> 西班牙广场周边</h5>
+                                    <p>罗马核心购物区，美食聚集地。可以在西班牙台阶上效仿赫本吃冰淇淋、喝咖啡，感受罗马假日氛围。</p>
+                        </div>
+                            </div>
+                            <p>请注意，罗马老城区道路狭窄，建议步行游览。今天的行程对体力消耗较大，可准备一些路餐。自由活动结束后，请自行返回酒店休息。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>傍晚/入夜</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://ac-a.static.booking.cn/xdata/images/hotel/max1024x768/399806502.jpg?k=e4d481ae5603efc1765063f146e0647cde0bf010bc44a9c19e85ab7c58a15714&o=&hp=1" alt="酒店">
+                            </div>
+                            <h3>继续入住罗马酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">品质住宿</span>
+                                <span class="tag tag-location">便捷位置</span>
+                            </div>
+                            <p>继续入住拿破仑酒店(Hotel Napoleon)或同级别酒店（以出团通知书为准）。酒店位于罗马市中心，距离罗马斗兽场1.05公里，特莱维喷泉1.88公里，非常适合您的罗马自由活动。罗马市中心的优质酒店普遍装修较为传统（房间面积约14平米），但酒店内部干净整洁，为您提供舒适的住宿体验。我们选择市中心酒店是为了方便您在不使用车辆服务的今天能够轻松步行游览各主要景点。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-2-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">2</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 3 内容 -->
+        <div id="day-3-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 3 - 罗马-比萨-佛罗伦萨（住佛罗伦萨）</h1>
+                <div class="day-intro">
+                    <p>今天我们将告别罗马，乘车前往托斯卡纳地区。上午首先探访世界闻名的比萨斜塔，在奇迹广场留下经典照片。下午抵达文艺复兴的摇篮——佛罗伦萨，我们将入内参观圣母百花大教堂，并登顶乔托钟楼，俯瞰这座美丽的城市。傍晚时分，前往米开朗基罗广场欣赏佛罗伦萨最美的日落全景。今晚入住佛罗伦萨酒店。</p>
+                </div>
+            </header>
+
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-landmark"></i>
+                        <h3>比萨奇迹广场</h3>
+                        <p>外观比萨斜塔，感受建筑奇迹</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-church"></i>
+                        <h3>佛罗伦萨双体验</h3>
+                        <p>圣母百花大教堂入内+乔托钟楼登顶</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-image"></i>
+                        <h3>米开朗基罗广场</h3>
+                        <p>佛罗伦萨全景最佳观赏点，欣赏日落</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>国际品牌酒店</h3>
+                        <p>入住希尔顿花园酒店或同级，舒适体验</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 前往比萨 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>前往比萨</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://p5.itc.cn/q_70/images03/20221203/94d92d02866249a2a5655e5fefb295f3.jpeg" alt="托斯卡纳风景">
+                            </div>
+                            <h3>罗马出发，前往比萨</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">7-8座用车</span>
+                                <span class="tag tag-guide">司兼导服务</span>
+                                <span class="tag tag-time">约3.5小时车程</span>
+                            </div>
+                            <p>早餐后，我们将搭乘舒适的7-8座车辆，离开罗马前往比萨。预计行车时间约3.5小时。沿途您将穿过美丽的托斯卡纳乡村，欣赏起伏的丘陵和橄榄树林。我们将有专业的司机兼导游全程为您提供服务。</p>
+                                </div>
+                                </div>
+
+                     <!-- 比萨斜塔 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>比萨奇迹广场</span>
+                            </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://pic.rmb.bdstatic.com/bjh/240415/events/92adc5fa52702fe5c33333780b0655e05713.jpeg@h_1280" alt="比萨斜塔">
+                            </div>
+                            <h3>比萨斜塔（外观）</h3>
+                            <div class="tags">
+                                <span class="tag tag-outside">外观参观</span>
+                                <span class="tag tag-unesco">世界遗产</span>
+                                <span class="tag tag-time">约1小时</span>
+                            </div>
+                            <p>抵达比萨后，我们将参观著名的奇迹广场，这里有比萨大教堂、洗礼堂和举世闻名的比萨斜塔。比萨斜塔是意大利比萨市的标志性建筑，建于<span class="highlight">12世纪</span>，因地基不均匀而逐渐倾斜，成为<span class="highlight">世界著名的建筑奇观</span>。我们将在这里停留约1小时，您可以自由拍照，欣赏这座独特的建筑（不安排登塔）。</p>
+                        </div>
+                    </div>
+
+
+                    <!-- 圣母百花大教堂 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>抵达佛罗伦萨</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://carolblog.tw/wp-content/uploads/2024/05/%E8%81%96%E6%AF%8D%E7%99%BE%E8%8A%B1%E5%A4%A7%E6%95%99%E5%A0%82_1.jpg" alt="圣母百花大教堂">
+                            </div>
+                            <h3>圣母百花大教堂</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">Giotto套票已含</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-unesco">世界遗产</span>
+                            </div>
+                            <p>从比萨乘车前往佛罗伦萨。抵达后，我们将参观这座城市的标志性建筑——圣母百花大教堂（含<span class="highlight">Giotto套票</span>，可参观乔托钟楼，洗礼堂，博物馆）。这座佛罗伦萨主教堂于1296年动工，1431年完成穹顶，1470年完成采光亭，整体竣工。教堂两端各为一钟楼和一穹窿顶，有着幽雅的外观轮廓，是许多艺术家工作的成果。佛罗伦萨主教堂的穹顶被公正地认为是<span class="highlight">意大利文艺复兴建筑的第一个作品</span>，新时代的第一朵报春花。</p>
+                        </div>
+                    </div>
+
+                    <!-- 乔托钟楼 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>登高望远</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://t7.baidu.com/it/u=1595677314,16986621&fm=193" alt="乔托钟楼">
+                            </div>
+                            <h3>乔托钟楼登顶</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">套票已含</span>
+                                <span class="tag tag-activity">体力活动</span>
+                                <span class="tag tag-view">全景观赏</span>
+                            </div>
+                            <p>随后我们将攀登乔托钟楼。佛罗伦萨主教堂的乔托钟楼是位于意大利佛罗伦萨境内的建筑，设计者为乔托，规格约有13.7米见方、84米高。钟楼的设计者，不是别人，正是意大利文艺复兴初期一位与诗人但丁同时代的大壁画家乔托，故又名乔托钟楼。整个钟楼一共有<span class="highlight">400多个台阶</span>，请大家当日务必穿着舒适的鞋子。登顶后，您将欣赏到佛罗伦萨老城的壮丽全景。</p>
+                            <div class="notice">
+                                <h4>贴心提示：</h4>
+                                <p>乔托钟楼有400多个台阶，建议穿着舒适的鞋子，并根据自身体力情况决定是否攀登。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 米开朗基罗广场 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>傍晚</h3>
+                            <span>日落时分</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://bkimg.cdn.bcebos.com/pic/d4628535e5dde7110a139e5da0efce1b9c16615c" alt="米开朗基罗广场日落">
+                            </div>
+                            <h3>米开朗琪罗广场</h3>
+                            <div class="tags">
+                                <span class="tag tag-outside">外观参观</span>
+                                <span class="tag tag-free">免费景点</span>
+                                <span class="tag tag-view">最佳观景台</span>
+                                <span class="tag tag-romantic">浪漫体验</span>
+                            </div>
+                            <p>日落前，我们将前往位于城市东南的小山上的米开朗基罗广场。广场中央安放着米开朗基罗《大卫》的复制品。黄昏时分，从广场上眺望被阿诺河一分为二的佛罗伦萨老城区玫瑰色的老房子和花之圣母大教堂的圆顶，会给人留下难忘的印象。米开朗琪罗广场也是整个弗洛伦萨的<span class="highlight">制高点</span>，是拍摄佛罗伦萨全景的最佳地点。</p>
+                        </div>
+                    </div>
+
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.unsplash.com/photo-1590490359683-658d3d23f972?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="希尔顿花园酒店">
+                            </div>
+                            <h3>入住佛罗伦萨酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">国际品牌</span>
+                                <span class="tag tag-comfort">25平米房间</span>
+                                <span class="tag tag-location">便捷位置</span>
+                            </div>
+                            <p>今晚我们将入住佛罗伦萨诺弗里希尔顿花园酒店(Hilton Garden Inn Florence Novoli)或者同级别酒店（以出团通知书为准）。酒店房间面积约<span class="highlight">25平方米</span>，提供现代化舒适的住宿体验。酒店位置便捷，Firenze Statuto火车站位于距离该酒店大约2km的地方。著名的景点Parco di San Donato、Biblioteca di Scienze Sociali和Parrocchia San Donato in Polverosa均可步行很短距离到达。酒店提供免费WiFi、舒适的床铺和现代化的设施。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-3-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">3</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 4 内容 -->
+        <div id="day-4-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 4 - 佛罗伦萨-威尼斯（住威尼斯）</h1>
+                <div class="day-intro">
+                    <p>今天，我们将从文艺复兴的摇篮佛罗伦萨出发，前往意大利最浪漫的水上城市——威尼斯。穿越美丽的乡村，抵达这座建于118个小岛上的奇迹之城。威尼斯没有汽车，只有蜿蜒的运河和精致的桥梁。下午，我们将进行经典的City Walk，探索圣马可广场、圣马可大教堂等世界级景点，并乘坐贡多拉游船穿梭在狭窄的水道中，感受这座水城独特的魅力与浪漫氛围。</p>
+                </div>
+            </header>
+
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-walking"></i>
+                        <h3>经典City Walk</h3>
+                        <p>赤足桥-亚里托桥-圣马可广场-总督宫</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-church"></i>
+                        <h3>圣马可大教堂</h3>
+                        <p>入内参观威尼斯象征，欣赏拜占庭艺术瑰宝</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-ship"></i>
+                        <h3>贡多拉游船体验</h3>
+                        <p>30分钟特色水上体验，感受水城独特魅力</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>梅斯特雷酒店</h3>
+                        <p>入住威尼斯梅斯特雷码头附近四星酒店</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 前往威尼斯 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>前往威尼斯</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://n.sinaimg.cn/sinakd20220816s/184/w2048h1336/20220816/cd44-36b1b8be929b34162dd335d49be3a88c.jpg" alt="前往威尼斯的公路">
+                            </div>
+                            <h3>乘车前往威尼斯</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">包车服务</span>
+                                <span class="tag tag-guide">司兼导服务</span>
+                                <span class="tag tag-time">约3小时路程</span>
+                            </div>
+                            <p>早餐后，我们将搭乘7-8座车辆，离开佛罗伦萨前往威尼斯，全程约275公里，预计行车时间约3小时。沿途您将欣赏到意大利北部的美丽乡村风光。抵达威尼斯后，我们将搭乘船只进入威尼斯主岛，开始我们的水城探索之旅。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 威尼斯City Walk -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>威尼斯City Walk</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://img1.qunarzz.com/vs_ceph_b2c_001/fab4003b-5e2f-4877-85fa-66df6143ca23.jpeg" alt="圣马可广场">
+                            </div>
+                            <h3>威尼斯经典City Walk线路</h3>
+                            <div class="tags">
+                                <span class="tag tag-walking">徒步游览</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-landmark">城市地标</span>
+                            </div>
+                            <p>下午是威尼斯经典的city walk线路：<span class="highlight">赤足桥-佩洛萨宫-亚里托桥-叹息桥-圣马可广场-总督宫</span>。我们将从著名的赤足桥开始，沿途经过历史建筑，最终抵达威尼斯的心脏——圣马可广场。</p>
+                        </div>
+                    </div>
+
+                     <!-- 圣马可广场与大教堂 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>核心景点</span>
+                        </div>
+                        <div class="timeline-content">
+                             <div class="attraction-image">
+                                <img src="https://img1.qunarzz.com/vs_ceph_b2c_001/fab4003b-5e2f-4877-85fa-66df6143ca23.jpeg" alt="圣马可大教堂">
+                            </div>
+                            <h3>圣马可广场与圣马可大教堂</h3>
+                            <div class="tags">
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-unesco">世界遗产</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-landmark">城市地标</span>
+                            </div>
+                             <p>圣马可广场又称<span class="highlight">威尼斯中心广场</span>，始建于公元829年，一直是威尼斯的政治、宗教和传统节日的公共活动中心。广场上最引人注目的建筑是圣马可大教堂。我们将<span class="highlight">入内参观</span>这座矗立于威尼斯市中心的宏伟教堂。始建于公元829年，重建于1043~1071年，它曾是<span class="highlight">中世纪欧洲最大的教堂</span>，是威尼斯建筑艺术的经典之作，同时也是一座收藏丰富艺术品的宝库，圣马可大教堂是威尼斯的骄傲。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 叹息桥和总督宫 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>继续探索</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://d00.paixin.com/thumbs/1002557/31221805/staff_1024.jpg" alt="叹息桥">
+                            </div>
+                            <h3>叹息桥与总督宫</h3>
+                            <div class="tags">
+                                <span class="tag tag-outside">外观参观</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-landmark">历史建筑</span>
+                            </div>
+                            <p>继续我们的行程，我们将参观著名的<span class="highlight">叹息桥</span>。叹息桥位于意大利威尼斯圣马可广场附近，公爵府（总督府）侧面的一座巴洛克风格的石桥。过桥的人被完全地封闭在桥梁里。它是威尼斯最著名的景点之一。随后我们将欣赏<span class="highlight">总督宫的外观</span>，又称威尼斯公爵府。始建于9世纪，属于欧洲中世纪哥特建筑。由于当时威尼斯与地中海东部的伊斯兰国家密切的文化贸易往来，大量阿拉伯人定居威尼斯，所以总督府立面的席纹图案明显受到了伊斯兰建筑的影响。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 贡多拉游船体验 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>特色体验</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://img1.qunarzz.com/vs_ceph_b2c_001/d5596073-43ce-4b43-a929-3e2a86283cd6.jpg" alt="贡多拉游船">
+                            </div>
+                            <h3>特色体验：贡多拉游船</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">已含费用</span>
+                                <span class="tag tag-experience">水上体验</span>
+                                <span class="tag tag-romantic">浪漫体验</span>
+                                <span class="tag tag-time">30分钟</span>
+                            </div>
+                            <p>在威尼斯，不能错过的体验就是乘坐贡多拉游船。贡多拉是<span class="highlight">威尼斯的传统平底船</span>，纤细轻盈，微微翘起的船头和船尾宛如月牙。我们安排了<span class="highlight">30分钟的贡多拉游船体验</span>（<span class="highlight">6人/船</span>），由威尼斯本地的船夫掌舵，带您穿梭在威尼斯狭窄的水道之中。从<span class="highlight">水上视角</span>饱览城市风光，感受威尼斯的柔情与浪漫！</p>
+                        </div>
+                    </div>
+    
+                    <!-- 自由活动/购物 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>傍晚</h3>
+                            <span>自由时光</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.pexels.com/photos/208701/pexels-photo-208701.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="威尼斯购物街">
+                            </div>
+                            <h3>自由活动或购物</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-shopping">购物机会</span>
+                                <span class="tag tag-food">美食体验</span>
+                            </div>
+                            <p>在导览结束后，您将有自由时间探索威尼斯。如果您有购物需求，可以去<span class="highlight">DFS百货</span>，退税比例为12%，推荐品牌包括Gucci、LV等。您也可以漫步在威尼斯的小巷中，发现隐藏的美景，品尝地道的威尼斯美食，或在运河边的咖啡馆小坐，感受水城的独特氛围。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.pexels.com/photos/271897/pexels-photo-271897.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="威尼斯酒店">
+                            </div>
+                            <h3>入住威尼斯梅斯特雷酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">四星酒店</span>
+                                <span class="tag tag-location">便捷位置</span>
+                                <span class="tag tag-comfort">舒适住宿</span>
+                            </div>
+                            <p>今晚我们将入住威尼斯<span class="highlight">梅斯特雷码头附近</span>的市区酒店，可能是威尼斯拉古纳宫NH酒店（四星酒店）或Best Western Plus Hotel Bologna或同级别酒店（以出团通知书为准）。这些酒店位置便捷，环境舒适，设施齐全，为您提供一个舒适的休息环境，为接下来的行程做好准备。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-4-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">4</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 5 内容 -->
+        <div id="day-5-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 5 - 威尼斯-米兰（住米兰）</h1>
+                <div class="day-intro">
+                    <p>从浪漫的水上城市威尼斯，我们将前往意大利时尚与设计之都——米兰。米兰作为欧洲最具活力的城市之一，融合了历史与现代、艺术与商业。我们将参观世界最大的哥特式教堂之一米兰大教堂，登上教堂顶部欣赏城市全景。随后在艾曼纽二世回廊领略米兰作为全球时尚之都的魅力，在这座"米兰的客厅"中体验优雅的购物与休闲时光。</p>
+                </div>
+            </header>
+    
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-church"></i>
+                        <h3>世界顶级教堂</h3>
+                        <p>米兰大教堂入内+电梯登顶，俯瞰时尚之都</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>奢华购物长廊</h3>
+                        <p>艾曼纽二世回廊，体验"米兰的客厅"</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-city"></i>
+                        <h3>时尚之都体验</h3>
+                        <p>感受米兰的历史与现代、艺术与商业融合</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>米兰市区酒店</h3>
+                        <p>入住米兰市区精选酒店，位置便利</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 前往米兰 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>前往米兰</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.pexels.com/photos/804954/pexels-photo-804954.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="通往米兰的公路">
+                            </div>
+                            <h3>威尼斯出发，前往米兰</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">包车服务</span>
+                                <span class="tag tag-guide">司兼导服务</span>
+                                <span class="tag tag-time">约3小时车程</span>
+                            </div>
+                            <p>早餐后，我们将搭乘7-8座车辆，告别水城威尼斯，前往意大利北部的时尚之都米兰。威尼斯到米兰预计行车时间约<span class="highlight">3小时</span>。路上我们将穿越意大利最富裕的伦巴第大区，沿途可欣赏到北意大利平原的田园风光。抵达米兰后，我们将直接前往市中心，开始探索这座充满活力的城市。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 米兰大教堂 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>米兰大教堂</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://copyright.bdstatic.com/vcg/creative/fe3a0cbdb03a3ea655bef68bc08cc702.jpg@h_1280" alt="米兰大教堂">
+                            </div>
+                            <h3>米兰大教堂-入内+电梯登顶</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-view">顶部观景</span>
+                                <span class="tag tag-landmark">世界五大教堂</span>
+                            </div>
+                            <p>我们将参观坐落于米兰市中心广场的米兰大教堂。这座宏伟的建筑是<span class="highlight">世界上最大的哥特式教堂</span>，名列<span class="highlight">世界五大教堂</span>之一。米兰大教堂于<span class="highlight">1386年开工建造</span>，1500年完成拱顶，整个教堂直到1965年才最终完工，<span class="highlight">历时近五个世纪</span>。教堂顶部的哥特式塔尖上矗立着由Giuseppe Perego建造的<span class="highlight">镀金圣母玛丽亚雕像</span>(La Madonnina)，是米兰市的象征。拿破仑曾于1805年在米兰大教堂举行加冕仪式。今天我们不仅会参观教堂内部，还将乘坐<span class="highlight">电梯登上教堂顶部</span>，欣赏米兰城市的壮丽全景，同时近距离欣赏教堂外部精美的哥特式建筑细节。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 艾曼纽二世回廊 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>购物时光</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Galleria_Milano_%28179532365%29.jpeg/1200px-Galleria_Milano_%28179532365%29.jpeg" alt="艾曼纽二世回廊">
+                            </div>
+                            <h3>艾曼纽二世回廊</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">免费景点</span>
+                                <span class="tag tag-shopping">购物天堂</span>
+                                <span class="tag tag-architecture">建筑奇观</span>
+                                <span class="tag tag-culture">米兰文化</span>
+                            </div>
+                            <p>随后我们将探访米兰重要的名品街——艾曼纽二世回廊。这座华丽的购物广场被誉为<span class="highlight">"米兰的客厅"</span>，可见它在米兰人心中的地位有多么重要。回廊建于<span class="highlight">19世纪末</span>，采用了<span class="highlight">新古典主义建筑风格</span>，十字形的走廊上方覆盖着壮观的玻璃穹顶，地面铺设着精美的马赛克。这里汇集了众多<span class="highlight">国际顶级品牌</span>的旗舰店，如普拉达、路易威登、古驰等，同时也有历史悠久的咖啡馆和餐厅。欧洲许多大城市都有名牌旗舰店和百货公司，但是让人买得高兴又如此赏心悦目的地方，应该就只有米兰的艾曼纽二世回廊了。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="米兰酒店">
+                            </div>
+                            <h3>入住米兰市区酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">品牌酒店</span>
+                                <span class="tag tag-comfort">舒适住宿</span>
+                                <span class="tag tag-location">便捷位置</span>
+                            </div>
+                            <p>今晚我们将入住米兰市区的酒店，可能是格南米兰酒店、NH米兰酒店、乌纳世界米兰酒店或同级别酒店（以出团通知书为准）。这些酒店位置便利，提供舒适的住宿环境，让您在一天的观光后得到充分的休息，为明天的瑞士行程做好准备。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-5-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">5</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 6 内容 -->
+        <div id="day-6-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 6 - 米兰-卢塞恩-龙疆小镇-布里恩茨-因特拉肯（住因特拉肯）</h1>
+                <div class="day-intro">
+                    <p>今天，我们将告别意大利，前往阿尔卑斯山脉怀抱中的瑞士。穿越国境后，首先抵达的是风景如画的卢塞恩小城，我们将参观古老的木桥和沉睡狮子像。随后前往美丽的龙疆小镇自由活动。下午，我们将体验被誉为"瑞士最美湖泊之一"的布里恩茨湖游船，领略阿尔卑斯山区湖光山色的完美融合，最终抵达瑞士著名的度假胜地因特拉肯。</p>
+                </div>
+            </header>
+    
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-landmark"></i>
+                        <h3>卢塞恩经典</h3>
+                        <p>卡贝尔廊桥、八角水塔、沉睡狮子像</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-mountain"></i>
+                        <h3>龙疆童话小镇</h3>
+                        <p>阿尔卑斯山下的彩色天堂，自由漫步1.5-2小时</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-ship"></i>
+                        <h3>布里恩茨湖游船</h3>
+                        <p>瑞士"蓝宝石湖"游船体验，含《爱的迫降》取景地</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>湖区特色酒店</h3>
+                        <p>入住瑞士特色湖区酒店，享阿尔卑斯美景</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 前往卢塞恩 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>前往卢塞恩</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.pexels.com/photos/28794196/pexels-photo-28794196.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="瑞士山路">
+                            </div>
+                            <h3>米兰出发，前往卢塞恩</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">包车服务</span>
+                                <span class="tag tag-guide">司兼导服务</span>
+                                <span class="tag tag-time">约2.5小时车程</span>
+                            </div>
+                            <p>早餐后，我们将从米兰出发，穿越意大利与瑞士的边境，前往瑞士中部城市卢塞恩。全程约250公里，预计行车时间约<span class="highlight">2.5小时</span>。途中我们将穿越阿尔卑斯山脉，沿途风景令人叹为观止。跨越国境后，您将明显感受到风景与文化的变化，瑞士的整洁有序与自然风光将给您留下深刻印象。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 卢塞恩小城 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>中午</h3>
+                            <span>卢塞恩小城</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/44000/44809-Old-Town-Lucerne.jpg" alt="卢塞恩小城">
+                            </div>
+                            <h3>卢塞恩小城深度游</h3>
+                            <div class="tags">
+                                <span class="tag tag-walking">徒步游览</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-time">约2小时</span>
+                            </div>
+                            <p>抵达卢塞恩后，我们将在这座依山傍水的小城停留约<span class="highlight">2小时</span>，享用午餐并参观城市标志性景点。卢塞恩位于瑞士中部，坐落在美丽的琉森湖畔，四周环绕着雪山。卢塞恩保留了许多中世纪的建筑，古朴而精致。</p>
+                             <div class="dining-recommendations">
+                                <h4>午餐推荐：</h4>
+                                <div class="restaurant">
+                                    <h5>卢塞恩火车站负二楼</h5>
+                                    <p>可以品尝美味的土耳其鸡肉卷（火塘旅行最爱）</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 卡贝尔廊桥和沉睡狮子像 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>中午</h3>
+                            <span>标志性景点</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://sns-img-hw.xhscdn.com/1000g0081nabl896de0005o1f697g89pd43ar100?imageView2/2/h/1080/format/webp" alt="卡贝尔廊桥">
+                            </div>
+                            <h3>卡贝尔廊桥和八角水塔 & 沉睡狮子像</h3>
+                            <div class="tags">
+                                <span class="tag tag-outside">外观参观</span>
+                                <span class="tag tag-guide">专业讲解</span>
+                                <span class="tag tag-iconic">标志性景点</span>
+                            </div>
+                            <p>我们将参观瑞士琉森最负盛名的卡佩尔廊桥(Chapel Bridge)，又称教堂桥，这是卢塞恩的标志，<span class="highlight">始建于1333年</span>，也是<span class="highlight">欧洲最古老的有顶木桥</span>。桥的横眉上绘有120幅宗教历史油画。与廊桥相连的是八角水塔。随后我们将参观<span class="highlight">沉睡狮子像</span>，这是为纪念法国大革命期间为保护路易十六而牺牲的瑞士雇佣兵而建造的纪念碑，被马克·吐温称为<span class="highlight">"世界上最悲伤和最感人的石头"</span>。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 龙疆小镇 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>龙疆小镇</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://b0.bdstatic.com/d3aaa009232c6eb138d0400f8884b6db.jpg@h_1280" alt="龙疆小镇">
+                            </div>
+                            <h3>龙疆小镇探访</h3>
+                            <div class="tags">
+                                <span class="tag tag-scenic">自然景观</span>
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-time">1.5-2小时</span>
+                            </div>
+                            <p>离开卢塞恩后，我们将前往龙疆(Lungern)小镇。龙疆是瑞士风景区琉森去因特拉肯旅游路线上的一个美丽小城，从卢塞恩开车到龙疆，大概时间为33分钟。这里充满雪山下的湖光山色，<span class="highlight">五彩缤纷的房屋</span>点缀在<span class="highlight">湛蓝湖水</span>和<span class="highlight">翠绿山坡</span>之间，宛如人间天堂。我们将在小镇深度停留<span class="highlight">1.5h-2h</span>，您可以自由活动，漫步湖边，欣赏远处的雪山倒映在湖水中的美景，感受阿尔卑斯山区小镇的宁静与美好。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 布里恩茨湖游船 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>湖上体验</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://pic.rmb.bdstatic.com/bjh/news/e411cebf710304c00648fdd522600932.jpeg" alt="布里恩茨湖">
+                            </div>
+                            <h3>特色体验：布里恩茨湖游船体验</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">船票已含</span>
+                                <span class="tag tag-scenic">绝美景观</span>
+                                <span class="tag tag-experience">特色体验</span>
+                            </div>
+                            <p>下午，我们将体验布里恩茨湖游船，从布里恩茨镇前往因特拉肯（<span class="highlight">16:40分时刻</span>）。布里恩茨湖是<span class="highlight">瑞士最美湖泊之一</span>，湖水因<span class="highlight">冰川矿物质</span>呈现独特的<span class="highlight">蓝绿色</span>，被誉为<span class="highlight">"蓝宝石湖"</span>。湖面四周环绕着茂密的森林和雄伟的阿尔卑斯山脉（少女峰、艾格峰等），构成如画一般的风景。游船途中会停靠伊瑟尔特瓦尔德(Iseltwald)，这里是韩剧<span class="highlight">《爱的迫降》的取景地</span>，有美丽的湖边栈道与古堡酒店。整个布里恩茨湖游船体验是"视觉与慢旅行的双重享受"。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 抵达因特拉肯 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>傍晚</h3>
+                            <span>抵达因特拉肯</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.pexels.com/photos/923036/pexels-photo-923036.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="因特拉肯小镇">
+                            </div>
+                            <h3>因特拉肯小镇漫步</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-food">晚餐自理</span>
+                                <span class="tag tag-shopping">购物机会</span>
+                            </div>
+                            <p>从布里恩茨湖游船下来后，我们将在因特拉肯小镇自由漫步。因特拉肯位于图恩湖和布里恩茨湖之间，是进入瑞士阿尔卑斯山区的门户。您可以在镇上的霍赫维克大街(Höheweg)漫步，欣赏对面少女峰的美景，或者探索当地的商店。晚餐可以选择在因特拉肯小镇或湖区酒店附近用餐，品尝瑞士传统美食。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://cf.bstatic.com/xdata/images/hotel/max1280x900/408778852.jpg?k=0f0ca502797ee727d4a67179d3427580396647ce37b4292944fa0bd15fe8d993&o=&hp=1" alt="瑞士湖区酒店">
+                            </div>
+                            <h3>入住瑞士特色湖区酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">特色酒店</span>
+                                <span class="tag tag-view">湖山景观</span>
+                                <span class="tag tag-comfort">舒适住宿</span>
+                            </div>
+                            <p>今晚我们将入住瑞士特色湖区酒店或者瑞士因特拉肯精品酒店（以出团通知书为准）。可能的酒店选择包括：<span class="highlight">美景居湖畔餐厅酒店</span>（2021年装修，56间房）、<span class="highlight">德尔塔公园威塔尔度假村(Deltapark Vitalresort)</span>、<span class="highlight">瑞士斯特拉精品酒店</span>、<span class="highlight">因特拉肯克雷布斯酒店</span>或<span class="highlight">卡尔顿-欧洲复古酒店</span>等。这些湖区酒店坐落于<span class="highlight">瑞士阿尔卑斯山脉间</span>，风景如画，<span class="highlight">湖光山色尽收眼底</span>。酒店提供<span class="highlight">舒适现代的客房</span>，给您奢华的住宿体验，服务周到，餐饮丰富，是度假与放松的绝佳选择。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-6-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">6</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 7 内容 -->
+        <div id="day-7-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 7 - 因特拉肯-少女峰-梦幻山坡（格林德瓦）-米伦小镇-因特拉肯（住因特拉肯）</h1>
+                <div class="day-intro">
+                    <p>今天是阿尔卑斯深度体验一日游。上午先前往格林德瓦的梦幻山坡短暂游览，然后我们将乘坐缆车和火车前往阿尔卑斯山脉的皇后——少女峰，登上欧洲最高的火车站，俯瞰壮丽的阿尔卑斯全景，参观冰宫。返程时参观气势磅礴的施陶河瀑布。下午再次前往被誉为"瑞士最佳机位"的梦幻山坡，捕捉黄金光线下的美景。途经米伦小镇返回因特拉肯。</p>
+                </div>
+            </header>
+    
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-mountain"></i>
+                        <h3>登顶少女峰</h3>
+                        <p>乘坐百年历史铁道，登顶欧洲之巅</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-camera"></i>
+                        <h3>梦幻山坡（两次）</h3>
+                        <p>瑞士最佳机位，上午初探，下午黄金光线拍摄</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-water"></i>
+                        <h3>施陶河瀑布</h3>
+                        <p>瑞士第二高瀑布，欧洲最高自由下落瀑布之一</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>湖区酒店连住</h3>
+                        <p>继续入住因特拉肯精选酒店，环抱美景</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 前往梦幻山坡 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>初探梦幻山坡</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://i2.hdslb.com/bfs/archive/b5be6cadf330c07f52b8e055e55a42b425eb0841.jpg" alt="格林德瓦梦幻山坡">
+                            </div>
+                            <h3>从因特拉肯出发前往梦幻山坡</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">包车服务</span>
+                                <span class="tag tag-guide">司兼导服务</span>
+                                <span class="tag tag-time">游览1小时</span>
+                            </div>
+                            <p>早餐后，从因特拉肯出发前往<span class="highlight">梦幻山坡</span>游览<span class="highlight">1小时</span>。梦幻山坡位于格林德瓦(Grindelwald)，又名艾格村（Eggboden），位于瑞士伯恩中部，<span class="highlight">因特拉肯（Interlaken）区内的直辖市</span>，是<span class="highlight">少女峰的著名滑雪区</span>。这里拥有独具特色、壮美秀丽的阿尔卑斯山景观，是久负盛名的<span class="highlight">度假和疗养胜地</span>。 <span class="highlight">今日出行，建议大家带点路餐，今日是阿尔卑斯深度体验一日游。</span></p>
+                        </div>
+                    </div>
+    
+                    <!-- 前往少女峰 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>登顶少女峰</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://copyright.bdstatic.com/vcg/creative/83091f9963fffaea9a1d3ba068c819f5.jpg@h_1280" alt="少女峰">
+                            </div>
+                            <h3>搭乘缆车+火车上<span class="highlight">少女峰</span>（劳特布农嫩站上下）</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-altitude">海拔3454米</span>
+                                <span class="tag tag-scenic">壮观景观</span>
+                                <span class="tag tag-iconic">欧洲之巅</span>
+                            </div>
+                            <p>游览梦幻山坡后，我们将搭乘缆车和火车上<span class="highlight">少女峰</span>（劳特布农嫩站上下）。<span class="highlight">少女峰</span>位于瑞士伯尔尼高地，是<span class="highlight">阿尔卑斯山区的著名山峰</span>，海拔<span class="highlight">4,158米</span>。作为瑞士旅游业的经典景点之一，少女峰一直以冰雪与山峰、阳光与浮云吸引着八方游客。我们将搭乘已有<span class="highlight">近百年历史的著名的少女峰铁道</span>（Jungfraujoch Railway）到达海拔3454米的<span class="highlight">欧洲最高的火车站</span>——少女峰火车站，这里备有餐厅等服务设施。您还可以亲身前往在<span class="highlight">冰河下凿建出来的超级冰宫</span>，体验冰河内部的世界。您可以在<span class="highlight">斯芬克斯观景台和普拉特观景台</span>俯瞰阿尔卑斯山壮观的全景。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 施陶河瀑布 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>返程途中</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://qcloud.dpfile.com/pc/RNxbSraGzGxzLxQ7_QB_8rrAKQzzg6WGh5exvXxPhSam-T1akhe32FXgB6K0ujZb.jpg" alt="施陶河瀑布">
+                            </div>
+                            <h3>施陶河瀑布</h3>
+                            <div class="tags">
+                                <span class="tag tag-scenic">自然景观</span>
+                                <span class="tag tag-landmark">瑞士第二高瀑布</span>
+                                <span class="tag tag-photo">摄影胜地</span>
+                            </div>
+                            <p>从少女峰返程时，我们将参观位于劳特布伦嫩峡谷的施陶河瀑布，它是这里<span class="highlight">72条瀑布中最壮观之一</span>，也是<span class="highlight">瑞士第二高瀑布</span>，更是<span class="highlight">欧洲最高的自由下落瀑布之一</span>。高约<span class="highlight">三百米</span>，气势磅礴。夏季，暖风在瀑布周围卷动，吹起瀑布水向四面八方喷射。瀑布和上游小溪的名字「施陶」正是形容这些喷射出来的水雾。施陶河瀑布是少女峰返程的必看景点。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 梦幻山坡（第二次） -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>15:30-17:30</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://gips0.baidu.com/it/u=3355212019,3684170454&fm=3074&app=3074&f=JPEG?w=1280&h=930&type=normal&func=" alt="梦幻山坡景色">
+                            </div>
+                            <h3>瑞士最佳机位-梦幻山坡（黄金时段）</h3>
+                            <div class="tags">
+                                <span class="tag tag-view">观景胜地</span>
+                                <span class="tag tag-photo">摄影天堂</span>
+                                <span class="tag tag-time">约2小时</span>
+                            </div>
+                            <p>下午<span class="highlight">15:30-17:30</span>，我们将再次来到被誉为<span class="highlight">"瑞士最佳机位"</span>的梦幻山坡。此时阳光的角度最佳，是拍摄阿尔卑斯山脉壮丽景色的黄金时段。在这里，您可以尽情享受大自然的美景，拍摄到如明信片般精美的照片。山坡上视野开阔，可以看到雄伟的艾格峰、少女峰和僧侣峰等阿尔卑斯名峰，以及下方翠绿的山谷和牧场。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 回因特拉肯 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>傍晚</h3>
+                            <span>返回因特拉肯</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://i2.hdslb.com/bfs/archive/331a3bf927fd33736c3c7d94ef0f2bc853a10d65.jpg" alt="因特拉肯黄昏">
+                            </div>
+                            <h3>经米伦小镇返回因特拉肯</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">包车服务</span>
+                                <span class="tag tag-free">晚餐自理</span>
+                                <span class="tag tag-rest">休闲时间</span>
+                            </div>
+                            <p>在离开梦幻山坡后，我们将途经风景如画的<span class="highlight">米伦小镇</span>，这是阿尔卑斯山区的又一个迷人小镇。随后返回因特拉肯。晚餐自理，您可以选择在因特拉肯小镇品尝当地美食，或者在酒店附近的餐厅用餐。晚餐后，您可以在镇上漫步，欣赏阿尔卑斯山的夜色，或者在酒店休息。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://cf.bstatic.com/xdata/images/hotel/max1280x900/408778852.jpg?k=0f0ca502797ee727d4a67179d3427580396647ce37b4292944fa0bd15fe8d993&o=&hp=1" alt="因特拉肯酒店">
+                            </div>
+                            <h3>继续入住因特拉肯酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">特色酒店</span>
+                                <span class="tag tag-view">湖山景观</span>
+                                <span class="tag tag-comfort">舒适住宿</span>
+                            </div>
+                            <p>今晚我们将继续入住瑞士特色湖区酒店或者瑞士因特拉肯精品酒店（以出团通知书为准）。可能的酒店选择包括：<span class="highlight">美景居湖畔餐厅酒店</span>（2021年装修，56间房）、<span class="highlight">德尔塔公园威塔尔度假村(Deltapark Vitalresort)</span>、<span class="highlight">瑞士斯特拉精品酒店</span>、<span class="highlight">因特拉肯克雷布斯酒店</span>或<span class="highlight">卡尔顿-欧洲复古酒店</span>等。在今天奔波一天后，您可以在舒适的酒店中放松身心，为明天的行程储备精力。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-7-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">7</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 8 内容 -->
+        <div id="day-8-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 8 - 因特拉肯（住因特拉肯）</h1>
+                <div class="day-intro">
+                    <p>今天上午在因特拉肯自由活动，您可以选择两种推荐玩法：体验刺激的滑翔伞，或者在美丽的湖区酒店放松休闲。中午集合后，下午我们将前往菲斯特山（First山），您可以选择轻徒步欣赏美景，或者自费体验山地卡丁车、滑板自行车等户外项目。晚上继续入住因特拉肯酒店。</p>
+                </div>
+            </header>
+    
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-parachute-box"></i>
+                        <h3>上午自由选择</h3>
+                        <p>滑翔伞体验或酒店湖景休闲</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-mountain"></i>
+                        <h3>菲斯特山体验</h3>
+                        <p>含往返缆车，可选轻徒步或刺激户外项目</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hiking"></i>
+                        <h3>户外活动胜地</h3>
+                        <p>感受瑞士世界级户外运动魅力</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>湖区酒店连住</h3>
+                        <p>继续入住因特拉肯精选酒店</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 因特拉肯自由活动 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>9:00-12:00</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%27LV8xNzMyNjA4OTM4Ljk1OTA4MzY%3D%27/0.png" alt="因特拉肯活动">
+                            </div>
+                            <h3>因特拉肯<span class="highlight">自由活动</span>（推荐2种玩法）</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-guide">线上答疑</span>
+                                <span class="tag tag-time">3小时</span>
+                            </div>
+                            <p>上午自由活动时间为<span class="highlight">9:00-12:00</span>。导游负责送您到对应的集合点，体验时间为自行体验，导游全程提供线上实时答疑。如果您想体验更多的自由活动乐趣，建议<span class="highlight">在出发前掌握一些基础的英文表达</span>，这将让您的旅行体验感加分。（火塘和团队小伙伴会全程在线，遇到任何问题，我们会协助处理，在尽可能安全的前提下，满足您多多体验的诉求。）</p>
+                            
+                            <div class="activity-options">
+                                <h4>两种推荐玩法：</h4>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-hang-gliding"></i> 第一种：<span class="highlight">滑翔伞体验</span></h5>
+                                    <p>您可以去体验因特拉肯有负盛名的滑翔伞体验。集合地点：因特拉肯东站附近（导游可以开车送您去）。从高处起飞，与专业教练一起翱翔在阿尔卑斯山的上空，俯瞰美丽的因特拉肯和周围的湖泊与山脉，这是一次难忘的体验。（费用自理）</p>
+                                </div>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-bed"></i> 第二种：<span class="highlight">酒店休闲</span></h5>
+                                    <p>您可以选择在我们给大家预定的瑞士酒店，睡个懒觉，看看湖景，放松心情。酒店周围环境优美，是短暂放空、调整状态的绝佳选择。</p>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+    
+                     <!-- 前往菲斯特山 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>中午</h3>
+                            <span>12:00</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>集合前往菲斯特山</h3>
+                             <div class="tags">
+                                <span class="tag tag-transport">包车接送</span>
+                                <span class="tag tag-guide">司兼导服务</span>
+                             </div>
+                            <p>中午12点左右，导游将接上大家（先接酒店休息的队友，再去接市区体验滑翔伞的队友），一同乘车前往菲斯特山。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 菲斯特山体验 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>菲斯特山</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://cdn.getyourguide.com/img/tour/5cc0de0b380bcc04.jpeg/145.jpg" alt="菲斯特山">
+                            </div>
+                            <h3>FIRST (菲斯特山) 体验</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">往返缆车已含</span>
+                                <span class="tag tag-activity">户外活动</span>
+                                <span class="tag tag-optional">自选项目</span>
+                                <span class="tag tag-hiking">轻徒步</span>
+                            </div>
+                            <p>我们将乘坐缆车上山，抵达菲斯特山。这里是瑞士著名的户外体验胜地。您可以选择<span class="highlight">轻徒步下山</span>，欣赏沿途风光，或者自费体验各种刺激的户外项目。整个First山有4个主要项目可以体验：<span class="highlight">山地卡丁车、滑板自行车、飞鹰、飞椅</span>。如果您对这些体验项目都不感兴趣，建议您当天可以换一双舒服的鞋子，沿着First山的步行道体验一下轻徒步，毕竟瑞士真的是世界户外胜地。</p>
+                             <div class="notice">
+                                <h4>安全提示与费用：</h4>
+                                <p>体验项目具有一定的风险性，如果您确认要体验，请务必注意人身安全，并确保已购买意外险。我们包含往返的缆车费用，如果您想要玩体验项目，费用需自理，可以联系销售人员协助预订。</p>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://cf.bstatic.com/xdata/images/hotel/max1280x900/408778852.jpg?k=0f0ca502797ee727d4a67179d3427580396647ce37b4292944fa0bd15fe8d993&o=&hp=1" alt="因特拉肯酒店">
+                            </div>
+                            <h3>继续入住因特拉肯酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">特色酒店</span>
+                                <span class="tag tag-view">湖山景观</span>
+                                <span class="tag tag-comfort">舒适住宿</span>
+                            </div>
+                            <p>今晚我们将继续入住瑞士特色湖区酒店或者瑞士因特拉肯精品酒店（以出团通知书为准）。可能的酒店选择包括：<span class="highlight">美景居湖畔餐厅酒店</span>（2021年装修，56间房）、<span class="highlight">德尔塔公园威塔尔度假村(Deltapark Vitalresort)</span>、<span class="highlight">瑞士斯特拉精品酒店</span>、<span class="highlight">因特拉肯克雷布斯酒店</span>或<span class="highlight">卡尔顿-欧洲复古酒店</span>等。享受在阿尔卑斯山环抱中的宁静夜晚。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-8-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">8</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 9 内容 -->
+        <div id="day-9-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 9 - 因特拉肯-施皮茨-金色山口列车-日内瓦（住日内瓦）</h1>
+                <div class="day-intro">
+                    <p>今天上午我们将前往图恩湖畔迷人的施皮茨小镇，自由活动约2小时，感受"瑞士里维埃拉的明珠"的魅力。午餐后前往茨卫西门，搭乘瑞士最经典的金色山口列车前往蒙特勒，欣赏沿途壮丽的湖光山色。傍晚抵达国际都市日内瓦，入住市区酒店后，您可以自由漫步，探索大喷泉、花钟等著名景点，并品尝当地美食。</p>
+                </div>
+            </header>
+    
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-vihara"></i>
+                        <h3>施皮茨小镇</h3>
+                        <p>图恩湖畔"葡萄园城堡秘境"，自由活动2小时</p>
+                    </div>
+                     <div class="highlight-card">
+                        <i class="fas fa-train"></i>
+                        <h3>金色山口列车</h3>
+                        <p>瑞士经典景观线路（茨卫西门-蒙特勒段）</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-city"></i>
+                        <h3>日内瓦初探</h3>
+                        <p>自由漫步，体验大喷泉、花钟、老城魅力</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>国际品牌酒店</h3>
+                        <p>入住洲际皇冠假日或同级四星酒店</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 前往施皮茨 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>~9:30出发</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>前往施皮茨小镇</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">包车服务</span>
+                                <span class="tag tag-guide">司兼导服务</span>
+                            </div>
+                             <p>今天可以稍微晚点出发，我们大约<span class="highlight">9:30左右</span>从因特拉肯出发，乘车前往施皮茨小镇。</p>
+                        </div>
+                    </div>
+
+                    <!-- 施皮茨小镇 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>施皮茨小镇</span>
+                        </div>
+                        <div class="timeline-content">
+                             <div class="attraction-image">
+                                <img src="https://ak-d.tripcdn.com/images/1A0d10000000pivlp356A_C_670_376_Q70.webp?proc=source%2ftrip&proc=source%2ftrip" alt="施皮茨小镇">
+                             </div>
+                             <h3>施皮茨小镇休闲参观</h3>
+                             <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-scenic">湖畔小镇</span>
+                                <span class="tag tag-time">约2小时</span>
+                             </div>
+                             <p>施皮茨小镇（Spiez）是图恩湖畔的"葡萄园城堡秘境"。坐落在图恩湖（Lake Thun）南岸的施皮茨，是伯尔尼高地最迷人的湖畔小镇之一。雪山、葡萄园、中世纪城堡与碧蓝湖水在此交织，被誉为"瑞士里维埃拉的明珠"。小镇地下藏有瑞士最大葡萄酒窖（Felsenkeller）。当地人笑称："我们的湖水是蓝的，葡萄酒是金的，而生活是慢的。" 我们将在这里<span class="highlight">自由活动约2小时</span>，让阿尔卑斯的风吹散所有匆忙。</p>
+                        </div>
+                    </div>
+
+                    <!-- 午餐与前往茨卫西门 -->
+                     <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>中午</h3>
+                            <span>午餐 & 出发</span>
+                        </div>
+                        <div class="timeline-content">
+                             <h3>施皮茨午餐 & 前往茨卫西门</h3>
+                             <div class="tags">
+                                 <span class="tag tag-meal">午餐自理</span>
+                                 <span class="tag tag-transport">包车服务</span>
+                             </div>
+                             <p>推荐在<span class="highlight">施皮茨小镇</span>享用午餐。用餐结束后可以在小镇里溜达一下，我们大概在<span class="highlight">下午2点左右</span>出发前往茨卫西门站，准备搭乘金色山口列车。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 金色山口列车 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>15:00</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://cdn.getyourguide.com/img/tour/bf1b34708cb3aa101b438424acad21046e95a3de279a75418d9870b72666b478.jpg/145.jpg" alt="金色山口列车">
+                            </div>
+                            <h3>特色体验：<span class="highlight">金色山口列车</span>（茨卫西门-蒙特勒站）</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">列车票已含</span>
+                                <span class="tag tag-scenic">全景观列车</span>
+                                <span class="tag tag-time">约1.5小时</span>
+                            </div>
+                            <p><span class="highlight">金色山口列车</span>是瑞士最经典的列车之一，这一趟列车沿途经过的风景，堪称瑞士湖光山色的代表。列车在起伏的<span class="highlight">阿尔卑斯山脉间穿梭</span>，日内瓦湖区的各种色彩在眼前铺展。远处<span class="highlight">纯白莹亮的雪山</span>，近处<span class="highlight">碧蓝的日内瓦湖</span>，都跃然眼前。体验时间约<span class="highlight">1.5小时</span>。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 抵达日内瓦 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>傍晚</h3>
+                            <span>18:00左右</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://cdn.getyourguide.com/img/tour/d3fa6b6b6c24b8ba.jpeg/145.jpg" alt="日内瓦全景">
+                            </div>
+                            <h3>抵达日内瓦，入住酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">包车接送</span>
+                                <span class="tag tag-hotel">市区酒店</span>
+                                <span class="tag tag-comfort">四星标准</span>
+                            </div>
+                            <p>预计下午<span class="highlight">6点左右</span>到达蒙特勒火车站，司兼导将在车站接您，然后乘车前往日内瓦。抵达后，我们将先去酒店办理入住。我们为您精心挑选了日内瓦市区的酒店。</p>
+                        </div>
+                    </div>
+    
+                    <!-- 日内瓦城市漫步 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>自由活动</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://zaiyouji.com/wp-content/uploads/2023/10/%E6%97%A5%E5%86%85%E7%93%A6.jpg" alt="日内瓦大喷泉">
+                            </div>
+                            <h3><span class="highlight">日内瓦城市漫步</span>体验</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-city">城市探索</span>
+                                <span class="tag tag-food">美食推荐</span>
+                            </div>
+                            <p>入住酒店后，您可以自由探索日内瓦这座优雅的城市。我们为您推荐几个经典景点：<span class="highlight">大喷泉</span>（Jet d'Eau）和<span class="highlight">花钟</span>；<span class="highlight">万国宫</span>（联合国欧洲总部，外观）；<span class="highlight">老城区圣彼得大教堂</span>。</p>
+                            
+                            <div class="dining-recommendations">
+                                <h4>推荐美食餐厅：</h4>
+                                <div class="restaurant">
+                                    <h5>Buvette des Bains</h5>
+                                    <p>类型：湖边简餐 | 人均：20-35 CHF</p>
+                                    <p>亮点：紧邻大喷泉（Jet d'Eau），开放式露天餐吧，提供沙拉、三明治和葡萄酒。</p>
+                                    <p>地址：Quai du Mont-Blanc 30, 1201 Genève</p>
+                                </div>
+                                <div class="restaurant">
+                                    <h5>Café du Centre</h5>
+                                    <p>类型：瑞士传统菜 | 人均：30-50 CHF</p>
+                                    <p>亮点：本地人钟爱的老牌餐厅，推荐芝士火锅（Fondue）、伯尔尼拼盘（Rösti配培根和煎蛋）。</p>
+                                    <p>地址：5 Place du Molard, 1204 Genève（老城中心，近购物街）</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                             <div class="attraction-image">
+                                <img src="https://s.qunarzz.com/f_cms/2021/1619162309162_78781384.png" alt="日内瓦皇冠假日酒店">
+                             </div>
+                             <h3>入住日内瓦酒店</h3>
+                             <div class="tags">
+                                <span class="tag tag-hotel">国际品牌</span>
+                                <span class="tag tag-location">市区位置</span>
+                                <span class="tag tag-comfort">四星标准</span>
+                            </div>
+                            <p>入住酒店：<span class="highlight">洲际酒店集团 皇冠假日 日内瓦 (Crowne Plaza Geneva by IHG)</span>或同级别酒店 （具体以出团通知书为准）。这是一家位于日内瓦市区的<span class="highlight">4星标准酒店</span>，提供舒适的住宿环境和完善的设施服务。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-9-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">9</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 10 内容 -->
+        <div id="day-10-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 10 - 日内瓦-巴黎（住巴黎）</h1>
+                <div class="day-intro">
+                    <p>今天，我们将告别美丽的瑞士，乘坐舒适的TGV高速列车前往浪漫之都——巴黎。抵达巴黎后，巴黎段司兼导将在车站迎接，带领我们开始巴黎的行程。下午我们将直奔世界上最著名的博物馆之一——卢浮宫，通过VIP入口和官方持证讲解，深入了解这座艺术殿堂的珍宝。晚上，您可以自由探索，或选择推荐的塞纳河游船晚宴，欣赏巴黎迷人的夜景。</p>
+                </div>
+            </header>
+
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-train"></i>
+                        <h3>TGV高铁体验</h3>
+                        <p>乘坐欧洲顶级高速列车，舒适便捷（约3h18min）</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-university"></i>
+                        <h3>卢浮宫深度游</h3>
+                        <p>VIP通道+官方持证讲解，近距离欣赏艺术瑰宝</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-ship"></i>
+                        <h3>可选塞纳河晚宴</h3>
+                        <p>推荐自费体验浪漫游船晚餐，欣赏巴黎夜景</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>巴黎中心酒店</h3>
+                        <p>入住小巴黎范围内四星酒店，便捷出行</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 前往火车站 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>9:00</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>酒店出发前往日内瓦高铁站</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">司导送站</span>
+                                <span class="tag tag-meal">含早餐</span>
+                            </div>
+                            <p>早上9:00，司兼导将在酒店接上各位，送往日内瓦高铁站，准备乘坐TGV高速列车前往巴黎。</p>
+                        </div>
+                    </div>
+
+                    <!-- 乘坐TGV -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午-下午</h3>
+                            <span>TGV列车</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://news.g2rail.com/wp-content/uploads/2019/08/SNCF-1.jpg" alt="TGV高速列车">
+                            </div>
+                            <h3>TGV高速列车：日内瓦-巴黎</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">高铁</span>
+                                <span class="tag tag-time">约3小时18分钟</span>
+                                <span class="tag tag-experience">欧洲交通体验</span>
+                            </div>
+                            <p>我们将乘坐TGV高速列车从日内瓦前往巴黎里昂火车站(Gare de Lyon)。推荐班次：<span class="highlight">10:30-13:43</span> 或 <span class="highlight">08:35-11:35</span>（具体班次以实际预订为准）。全程约3小时18分钟，您可以在舒适的列车上欣赏沿途风光。</p>
+                        </div>
+                    </div>
+
+                    <!-- 抵达巴黎 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>抵达巴黎</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://www.luxembourg-paris-hotel.com/wp-content/uploads/2023/10/pont-de-Paris-jpg.webp" alt="巴黎里昂车站">
+                            </div>
+                            <h3>抵达巴黎里昂车站 & 开始巴黎行程</h3>
+                            <div class="tags">
+                                <span class="tag tag-arrival">抵达</span>
+                                <span class="tag tag-guide">巴黎司导接站</span>
+                                <span class="tag tag-transport">巴黎段用车</span>
+                            </div>
+                            <p>抵达巴黎里昂车站后，<span class="highlight">巴黎段司兼导</span>将在站台迎接您，开始巴黎段的行程。午餐需自理，可以在车站附近或前往卢浮宫途中解决。</p>
+                        </div>
+                    </div>
+
+                    <!-- 卢浮宫参观 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>卢浮宫</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://bkimg.cdn.bcebos.com/pic/c8177f3e6709c93d8a61800e963df8dcd00054bc" alt="卢浮宫">
+                            </div>
+                            <h3>卢浮宫-入内 <span class="highlight">官方持证讲解+VIP通道</span></h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-guide">官方持证讲解</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-vip">VIP入口</span>
+                                <span class="tag tag-time">约2-2.5小时</span>
+                            </div>
+                            <p>我们将参观位于法国巴黎市中心的塞纳河北岸，位居世界四大博物馆之首的卢浮宫。始建于1204年，原是法国的王宫，居住过50位法国国王和王后。卢浮宫以收藏丰富的古典绘画和雕刻而闻名于世，拥有"卢浮宫三宝"——《蒙娜丽莎》、《米洛的维纳斯》和《萨莫特拉斯的胜利女神》。我们将通过<span class="highlight">VIP通道</span>进入，并由<span class="highlight">官方持证讲解员</span>带领参观约<span class="highlight">2至2.5小时</span>。</p>
+                        </div>
+                    </div>
+
+                    <!-- 自由活动与晚餐推荐 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>自由探索</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://q2.itc.cn/q_70/images03/20240627/d29d4ae3825e42808a6e9bd21e8f84da.jpeg" alt="塞纳河游船">
+                            </div>
+                            <h3>自由活动 & 晚餐推荐：塞纳河游船晚宴（可选）</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-optional">可选项目(自理)</span>
+                                <span class="tag tag-romantic">浪漫体验</span>
+                                <span class="tag tag-view">夜景观赏</span>
+                                <span class="tag tag-time">约1小时</span>
+                            </div>
+                            <p>卢浮宫参观结束后为自由活动时间。晚上您可以自行去埃菲尔铁塔看亮灯仪式。晚餐推荐自费体验<span class="highlight">塞纳河-巴黎人夜游船晚宴</span>（体验时间约1小时）。登船点就在埃菲尔铁塔旁边，游船晚餐是体验巴黎夜景的绝佳方式。透过大玻璃窗，您可以欣赏到埃菲尔铁塔、卢浮宫、巴黎圣母院等标志性建筑的剪影。船上通常有乐队演奏，氛围极佳。（该项目自愿体验，费用自理，旅行社可以提供代订服务）。体验结束后，请自行返回酒店（今日司导服务时间为10小时，可能在此之前结束）。</p>
+                        </div>
+                    </div>
+
+                    <!-- 入住酒店 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>入住</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.wota.co/upload/431_456248dd-38d6-4092-a51d-24a1c5171c56_O.jpg" alt="巴黎酒店">
+                            </div>
+                            <h3>入住巴黎市中心四星酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">四星酒店</span>
+                                <span class="tag tag-location">市中心(小巴黎内)</span>
+                                <span class="tag tag-facility">交通便利</span>
+                            </div>
+                            <p>今晚我们将入住位于<span class="highlight">巴黎市中心（小巴黎范围内）</span>的四星级酒店。参考酒店：<span class="highlight">绘画之家酒店(Drawing House)</span> / <span class="highlight">巴黎东站诺翰酒店(NH Paris Gare de l Est)</span> 或同级别酒店（以出团通知书为准）。我们优选小巴黎圈内酒店，交通便利，距离核心景点控制在3-5公里内，方便您行程结束后自由探索巴黎的美丽，拒绝郊区酒店。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-10-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">10</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 11 内容 -->
+        <div id="day-11-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 11 - 巴黎深度一日游（住巴黎）</h1>
+                <div class="day-intro">
+                    <p>今天我们将进行巴黎深度一日游。上午前往凡尔赛宫，在官方持证讲解员的带领下，通过VIP通道入内参观这座欧洲最雄伟的皇宫。午餐后返回市区，参观华丽的巴黎歌剧院（加尼叶歌剧院）和巴黎圣母院（外观或根据开放情况入内）。之后探访塞纳河左岸的文化地标，如莎士比亚书店和花神咖啡馆。您也可以在歌剧院参观结束后选择自由活动，前往附近的老佛爷或春天百货购物。</p>
+                </div>
+            </header>
+
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-chess-king"></i>
+                        <h3>凡尔赛宫深度游</h3>
+                        <p>VIP通道+官方持证讲解，领略皇家奢华</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-theater-masks"></i>
+                        <h3>巴黎歌剧院</h3>
+                        <p>入内参观加尼叶歌剧院，感受巴洛克艺术</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-book-open"></i>
+                        <h3>左岸文化探索</h3>
+                        <p>巴黎圣母院、莎士比亚书店、花神咖啡</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-shopping-bag"></i>
+                        <h3>购物或自由行</h3>
+                        <p>可选择在歌剧院后自由购物或继续游览</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 凡尔赛宫 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>凡尔赛宫</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://cdn.elebase.io/173fe953-8a63-4a8a-8ca3-1bacb56d78a5/d6c00c23-3ca3-4464-a6d1-5d78f4afcd0d-08.-the-hall-of-mirrors-thomas-garnier_gtr_6563.jpg?w=1000&h=500&fit=crop&q=75" alt="凡尔赛宫">
+                            </div>
+                            <h3>凡尔赛宫-入内 <span class="highlight">官方持证讲解+VIP通道</span></h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-guide">官方持证讲解</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-vip">VIP入口</span>
+                                <span class="tag tag-time">约1.5-2小时</span>
+                            </div>
+                            <p>早餐后，我们将前往凡尔赛宫。太阳王路易十四因为羡慕财政大臣Fouquet的沃子爵城堡而斥巨资动用三万工人建造的法国最雄伟的皇宫，后来也成为欧洲各国皇宫效仿的对象。法国大革命后，这里结束了他皇宫的历史，1830年被改建成法国历史博物馆。美国独立战争后，英美在此签订了《巴黎和约》，1919年法英美等在此与德国签订了《凡尔赛和约》宣告了第一次世界大战的结束。我们将通过<span class="highlight">VIP通道</span>进入，并由<span class="highlight">官方持证讲解员</span>带领参观约<span class="highlight">1.5至2小时</span>。</p>
+                        </div>
+                    </div>
+
+                    <!-- 午餐 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>中午</h3>
+                            <span>午餐时间</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>午餐</h3>
+                            <div class="tags">
+                                <span class="tag tag-meal">午餐自理</span>
+                                <span class="tag tag-location">凡尔赛小镇或市区</span>
+                            </div>
+                            <p>午餐可以在<span class="highlight">凡尔赛宫小镇</span>解决，或者返回巴黎市区，在下午参观巴黎歌剧院附近用餐。</p>
+                                </div>
+                                </div>
+
+                    <!-- 巴黎歌剧院 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>巴黎歌剧院</span>
+                            </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://sight.kaytrip.com/uploads/sight/2015-12-28/1451286867.jpg" alt="巴黎歌剧院">
+                            </div>
+                            <h3>巴黎歌剧院入内参观</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-inside">入内参观</span>
+                                <span class="tag tag-architecture">巴洛克艺术</span>
+                            </div>
+                            <p>下午我们将参观<span class="highlight">巴黎歌剧院</span>（法语：Opéra de Paris），又称为加尼叶歌剧院（法语：Opéra Garnier）。这是一座位于法国巴黎，拥有2200个座位的歌剧院，总面积11237平方米，是新巴洛克式建筑的典范之作。预计参观结束时间为下午<span class="highlight">2:30-3:00</span>。</p>
+                        </div>
+                    </div>
+
+                    <!-- 巴黎圣母院 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>巴黎圣母院</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://miaobi-lite.bj.bcebos.com/miaobi/5mao/b%275be06buO5Zyj5q%2BN6Zmi5omL57uYXzE3Mjg0MzY1MzQuMDI5MTc1%27/0.png" alt="巴黎圣母院">
+                            </div>
+                            <h3>巴黎圣母院<span class="highlight">入内参观</span>*</h3>
+                            <div class="tags">
+                                <span class="tag tag-included">门票已含</span>
+                                <span class="tag tag-inside">入内参观*</span>
+                                <span class="tag tag-historic">哥特式建筑</span>
+                            </div>
+                            <p>正式名称为巴黎圣母主教座堂，又名巴黎圣母院大教堂，位于法兰西共和国巴黎市中心城区，地处塞纳河中央西堤岛上，与巴黎市政厅和卢浮宫隔河相望，为哥特式基督教教堂建筑。</p>
+                            <p class="notice">*注意：根据官方最新消息，巴黎圣母院预计于2024年底重新对公众开放，具体开放范围和时间请以届时实际情况为准。如未能入内，将改为外观详细讲解。</p>
+                        </div>
+                    </div>
+
+                     <!-- 莎士比亚书店 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>文化地标</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                 <img src="https://s3-eu-west-1.amazonaws.com/obonparis/pictures/000/000/869/xxl/c800607fcb29dcb72a82b9203884682a0527288cf41f8c8a575c5ba7468d1dde.jpg" alt="莎士比亚书店">
+                            </div>
+                             <h3>莎士比亚书店</h3>
+                            <div class="tags">
+                                 <span class="tag tag-cultural">文化地标</span>
+                                 <span class="tag tag-outside">外观/入内浏览</span>
+                                 <span class="tag tag-historic">著名书店</span>
+                            </div>
+                            <p>位于塞纳河左岸，与巴黎圣母院隔河相望，是世界上最著名的书店之一，是当地著名的文化地标，"网红打卡地"。被誉为"世界上最美的书店"之一，是文学爱好者的朝圣地。</p>
+                        </div>
+                    </div>
+
+                     <!-- 花神咖啡馆 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>文化体验</span>
+                        </div>
+                        <div class="timeline-content">
+                             <div class="attraction-image">
+                                 <img src="https://lh6.googleusercontent.com/proxy/vUk--UwcqZeOWnwoJwmLRBE6iqeS598PmECyZV2W59_CZ0fIbwu9K-rKCrF9ZgWi-SKT-WWZ1SwFpmwAoV6Gi7Ovv41nCpBu_njZktStFPOAyndI9Y_N4w" alt="花神咖啡馆">
+                             </div>
+                             <h3>花神咖啡馆</h3>
+                            <div class="tags">
+                                 <span class="tag tag-cultural">历史咖啡馆</span>
+                                 <span class="tag tag-experience">咖啡文化</span>
+                                 <span class="tag tag-famous">名人聚集地</span>
+                            </div>
+                            <p>花神咖啡（Cafe de Flore），位于巴黎第六区圣日耳曼大街172号。是巴黎著名三大咖啡馆之一，因当时门前装有一尊古罗马女神Flore的雕像而得名。它是波伏娃与萨特旷世奇情的见证人，是"存在主义"的摇篮。您可以在此感受巴黎浓厚的咖啡馆文化（消费自理）。</p>
+                                </div>
+                                </div>
+
+                     <!-- 自由活动选项 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>下午</h3>
+                            <span>自由选择</span>
+                                </div>
+                        <div class="timeline-content">
+                             <h3>自由活动选项：购物</h3>
+                             <div class="tags">
+                                 <span class="tag tag-free">自由活动</span>
+                                 <span class="tag tag-shopping">购物</span>
+                            </div>
+                             <p>如果大家想要单独在巴黎购物，可以在<span class="highlight">巴黎歌剧院</span>的景点参观结束之后，申请自由活动。巴黎歌剧院附近就是著名的<span class="highlight">老佛爷百货</span>和<span class="highlight">春天百货</span>，是购物的绝佳地点。</p>
+                        </div>
+                    </div>
+
+                     <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>休息</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.wota.co/upload/431_456248dd-38d6-4092-a51d-24a1c5171c56_O.jpg" alt="巴黎酒店">
+                            </div>
+                            <h3>继续入住巴黎市中心四星酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">四星酒店</span>
+                                <span class="tag tag-location">市中心(小巴黎内)</span>
+                                <span class="tag tag-facility">交通便利</span>
+                            </div>
+                            <p>今晚我们将继续入住位于巴黎市中心（小巴黎范围内）的四星级酒店。参考酒店：<span class="highlight">绘画之家酒店(Drawing House)</span> / <span class="highlight">巴黎东站诺翰酒店(NH Paris Gare de l Est)</span> 或同级别酒店（以出团通知书为准）。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-11-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">11</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+
+        <!-- Day 12 内容 -->
+        <div id="day-12-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 12 - 巴黎自由探索</h1>
+                <div class="day-intro">
+                    <p>今天是您在巴黎的自由探索日。您可以根据自己的兴趣，深入体验这座城市的魅力。我们都说巴黎的左岸是学术文化的摇篮，那巴黎的右岸就是奢华时尚的代表。一条塞纳河，两种生活的选择，您会更喜欢哪种呢？您可以选择探索右岸的经典路线，也可以尽情购物，或者探访更多的艺术场馆。我们的导游可以为您提供个性化的行程建议和必要的协助。</p>
+                </div>
+            </header>
+    
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-map"></i>
+                        <h3>自由探索</h3>
+                        <p>根据个人兴趣，深度体验巴黎</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-compass"></i>
+                        <h3>右岸精华推荐</h3>
+                        <p>歌剧院-旺多姆广场-杜乐丽花园-玛黑区等</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>个性化建议</h3>
+                        <p>导游提供1对1行程沟通与建议</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-hotel"></i>
+                        <h3>市中心酒店</h3>
+                        <p>继续入住巴黎市中心四星酒店</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 早餐与行程规划 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>上午</h3>
+                            <span>行程规划</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>酒店早餐与行程规划</h3>
+                            <div class="tags">
+                                <span class="tag tag-meal">早餐</span>
+                                <span class="tag tag-guide">导游服务</span>
+                                <span class="tag tag-plan">自由规划</span>
+                            </div>
+                            <p>在酒店享用早餐后，您可以与导游沟通今天的计划。无论您是想购物、看展、逛街还是品尝美食，导游都会为您提供专业的建议和路线规划。有需要<span class="highlight">一日游行程推荐</span>的可以找火塘<span class="highlight">单独1对1沟通</span>。</p>
+                        </div>
+                    </div>
+
+                    <!-- 全天自由活动 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>全天</h3>
+                            <span>自由探索</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.pexels.com/photos/2089799/pexels-photo-2089799.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="巴黎街景">
+                            </div>
+                            <h3>巴黎自由活动 - 右岸推荐线路</h3>
+                            <div class="tags">
+                                <span class="tag tag-free">自由活动</span>
+                                <span class="tag tag-guide">导游建议</span>
+                                <span class="tag tag-explore">城市探索</span>
+                            </div>
+                            <p>今天您可以完全自由地探索巴黎。如果您倾向于探索巴黎的右岸，这里有一条推荐的参观线路：</p>
+                            <p><span class="highlight">巴黎歌剧院 -> 旺多姆广场 -> 杜乐丽花园 -> 卢浮宫 (外观) -> 皇家广场 -> 蓬皮杜中心 -> 巴黎市政府 -> 玛黑区 (Le Favorite咖啡) -> 孚日广场。</span></p>
+                            <p>这条线路涵盖了从奢华购物区到现代艺术中心，再到历史悠久的广场和时尚街区，让您充分感受巴黎右岸的多样魅力。您可以慢慢行走，随时停下来拍照、购物或品尝咖啡，享受悠闲的巴黎时光。</p>
+                            <div class="activity-options">
+                                <h4>其他活动建议：</h4>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-shopping-bag"></i> 深度购物</h5>
+                                     <p>前往奥斯曼大道的老佛爷/春天百货，或圣奥诺雷街、蒙田大道探索奢侈品，或在玛黑区寻找设计师精品。</p>
+                                </div>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-palette"></i> 艺术之旅</h5>
+                                     <p>参观奥赛博物馆、橘园美术馆、罗丹美术馆或蓬皮杜国家艺术文化中心等。</p>
+                                </div>
+                                <div class="activity-option">
+                                    <h5><i class="fas fa-coffee"></i> 漫步与美食</h5>
+                                     <p>探索拉丁区、圣日耳曼德佩区，寻找特色咖啡馆和小餐馆，品尝法式甜点。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 餐饮建议 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>午餐/晚餐</h3>
+                            <span>自理</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>餐饮自理</h3>
+                            <div class="tags">
+                                <span class="tag tag-meal">自理</span>
+                                <span class="tag tag-food">美食探索</span>
+                            </div>
+                            <p>午餐和晚餐请根据您的活动地点自行安排。巴黎遍布各式餐厅，从米其林星级到街头小吃，总能找到满足您味蕾的选择。可以尝试法式洋葱汤、油封鸭、蜗牛等经典法国菜。</p>
+                        </div>
+                    </div>
+
+                    <!-- 返回酒店 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>晚上</h3>
+                            <span>返回酒店</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>返回酒店休息</h3>
+                            <div class="tags">
+                                <span class="tag tag-rest">休息</span>
+                                <span class="tag tag-prepare">准备返程</span>
+                            </div>
+                            <p>结束了一天的自由探索后，请自行返回酒店休息。建议今晚整理行李，为明天的返程做好准备。回顾在巴黎的美好时光，准备带着满满的回忆回家。</p>
+                        </div>
+                    </div>
+
+                    <!-- 晚间住宿 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>住宿</h3>
+                            <span>四星酒店</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" alt="巴黎酒店">
+                            </div>
+                            <h3>继续入住巴黎市中心四星酒店</h3>
+                            <div class="tags">
+                                <span class="tag tag-hotel">四星酒店</span>
+                                <span class="tag tag-location">市中心(小巴黎内)</span>
+                            </div>
+                            <p>今晚我们将继续入住位于巴黎市中心（小巴黎范围内）的四星级酒店。参考酒店：<span class="highlight">绘画之家酒店(Drawing House)</span> / <span class="highlight">巴黎东站诺翰酒店(NH Paris Gare de l Est)</span> 或同级别酒店（以出团通知书为准）。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-12-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">12</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+        
+        <!-- Day 13 内容 -->
+        <div id="day-13-content" class="day-content">
+            <header class="day-header">
+                <h1>Day 13 - 巴黎-返回中国（飞机上）</h1>
+                <div class="day-intro">
+                    <p>今天是您欧洲之旅的最后一天。您可以根据航班时间，在酒店享用早餐后进行最后的整理或在附近稍作停留。我们的司兼导将根据您的航班信息，准时送您前往巴黎戴高乐机场，并协助办理相关离境手续。随后您将搭乘国际航班返回中国，结束愉快的法意瑞13天旅程。</p>
+                </div>
+            </header>
+
+            <section class="highlights-banner">
+                <h2>今日亮点聚焦</h2>
+                <div class="highlights-container">
+                    <div class="highlight-card">
+                        <i class="fas fa-suitcase"></i>
+                        <h3>整理行装</h3>
+                        <p>享用早餐，最后整理行李</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-plane-departure"></i>
+                        <h3>专业送机</h3>
+                        <p>司兼导准时送机，协助办理手续</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-memory"></i>
+                        <h3>旅程回顾</h3>
+                        <p>飞行途中回味欧洲精彩瞬间</p>
+                    </div>
+                    <div class="highlight-card">
+                        <i class="fas fa-home"></i>
+                        <h3>返回家乡</h3>
+                        <p>带着满满的回忆与收获返回中国</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="timeline-section">
+                <div class="timeline-container">
+                    <!-- 早餐 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>早晨</h3>
+                            <span>准备出发</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>酒店早餐 & 准备退房</h3>
+                            <div class="tags">
+                                <span class="tag tag-meal">含早餐</span>
+                                <span class="tag tag-hotel">退房准备</span>
+                            </div>
+                            <p>享用您在巴黎的最后一顿早餐。早餐后，请仔细检查并整理好您的所有行李物品，确保没有遗漏。准备办理退房手续。</p>
+                        </div>
+                    </div>
+
+                     <!-- 自由时间/退房 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                             <h3>上午/中午</h3>
+                             <span>根据航班</span>
+                        </div>
+                        <div class="timeline-content">
+                             <h3>自由时间 / 退房</h3>
+                            <div class="tags">
+                                 <span class="tag tag-free">自由时间(视航班)</span>
+                                 <span class="tag tag-hotel">退房</span>
+                            </div>
+                             <p>如果您的航班是下午或晚上，您可能有短暂的自由时间。您可以存放行李后在酒店附近稍作停留。请根据与司兼导约定的时间准时办理退房。</p>
+                        </div>
+                    </div>
+
+                    <!-- 前往机场 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>中午/下午</h3>
+                            <span>前往机场</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="http://imgcache.dealmoon.com/thumbimg.dealmoon.com/dealmoon/3dd/1a9/0da/2945d378181226d49857591.jpg_1280_1280_3_a8e9.jpg" alt="戴高乐机场">
+                            </div>
+                            <h3>前往巴黎戴高乐机场 (CDG)</h3>
+                            <div class="tags">
+                                <span class="tag tag-transport">专车送机</span>
+                                <span class="tag tag-service">司兼导服务</span>
+                            </div>
+                            <p>根据您的航班信息，我们的<span class="highlight">司兼导将安排送机服务</span>。通常国际航班建议提前3小时抵达机场。司兼导会准时在酒店接您，并将您送至巴黎戴高乐机场相应的航站楼。</p>
+                            <div class="service-highlights">
+                                <div class="service-item">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>退税提示</span>
+                                    <p>如需办理退税，请预留充足时间，并准备好相关单据、护照和商品</p>
+                                </div>
+                                <div class="service-item">
+                                    <i class="fas fa-suitcase-rolling"></i>
+                                    <span>行李提示</span>
+                                    <p>请确认您的行李额度，并将液体、尖锐物品放入托运行李</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 机场办理手续 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>出发前</h3>
+                            <span>办理手续</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>办理离境手续</h3>
+                            <div class="tags">
+                                <span class="tag tag-service">司导协助</span>
+                                <span class="tag tag-process">值机/安检/海关</span>
+                            </div>
+                            <p>抵达机场后，司兼导将协助您办理值机、行李托运等手续。如有退税需求，请先办理退税。之后您将自行通过安检和海关检查，前往登机口候机。司兼导的服务将在送您至值机柜台或安检入口处结束。</p>
+                        </div>
+                    </div>
+
+                    <!-- 航班返程 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>返程</h3>
+                            <span>飞行途中</span>
+                        </div>
+                        <div class="timeline-content">
+                            <div class="attraction-image">
+                                <img src="https://img.airfrance.com.cn/transform/e56219e9-21c7-4bb0-b7a5-f5353a5140d3/" alt="飞机舷窗">
+                            </div>
+                            <h3>搭乘国际航班返回中国</h3>
+                            <div class="tags">
+                                <span class="tag tag-travel">长途飞行</span>
+                                <span class="tag tag-meal">机上餐食</span>
+                                <span class="tag tag-service">航空服务</span>
+                            </div>
+                            <p>登上返回中国的航班，舒适地度过飞行时光。航空公司将提供餐饮服务。您可以在万米高空回顾这13天精彩纷呈的欧洲之旅，从意大利的古老文明到瑞士的湖光山色，再到法国的浪漫风情，每一段旅程都将化为珍贵的回忆。</p>
+                        </div>
+                    </div>
+
+                    <!-- 旅行结束 -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-date">
+                            <h3>抵达</h3>
+                            <span>回到家乡</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>抵达中国 & 旅程结束</h3>
+                            <div class="tags">
+                                <span class="tag tag-end">旅程结束</span>
+                                <span class="tag tag-memory">美好回忆</span>
+                            </div>
+                            <p>飞机顺利抵达中国，您的法意瑞13天经典行程圆满结束。感谢您选择我们的服务，希望这次旅行给您留下了深刻而美好的印象。期待未来能再次与您同行，探索更多世界的精彩！</p>
+                            <div class="farewell-message">
+                                <h4>温馨提示：</h4>
+                                <p>抵达后请注意调整时差。祝您生活愉快，旅途中的美好回忆常伴左右！</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 添加在day-13-content底部 -->
+            <section class="navigation-links">
+                <a href="#" class="nav-btn prev-btn" data-action="prev">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>上一天</span>
+                </a>
+                <div class="day-indicator">
+                    <span class="current-day">13</span>
+                    <span class="total-days">/ 13</span>
+                </div>
+                <a href="#" class="nav-btn next-btn" data-action="next" style="visibility: hidden;">
+                    <span>下一天</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // 设置每天对应的背景图片URL
+        const backgroundImages = {
+            1: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", // 罗马
+            2: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", // 罗马斗兽场
+            3: "https://images.unsplash.com/photo-1516186366443-0744a82bffef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", // 比萨斜塔 (Day 3 now includes Pisa)
+            4: "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", // 威尼斯 (Day 4 is now Florence -> Venice)
+            5: "https://images.unsplash.com/photo-1520175480921-4edfa2983e0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", // 米兰 (Day 5 is now Venice -> Milan)
+            6: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80", // 卢塞恩山景 (Day 6 is now Milan -> Switzerland)
+            7: "https://esim.textrapp.com/wp-content/uploads/2023/11/4-6.png", // 少女峰 (Day 7 is Jungfrau region)
+            8: "https://images.pexels.com/photos/1684151/pexels-photo-1684151.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2", // 因特拉肯活动/First山 (Day 8 is Interlaken free day)
+            9: "https://esim.textrapp.com/wp-content/uploads/2023/11/4-6.png", // 日内瓦湖/施皮茨 (Day 9 includes Spiez and Geneva)
+            10: "https://blog-static.kkday.com/zh-hk/blog/wp-content/uploads/France_Paris_Eiffel-Tower_AFotolia_65117955-min-1-jpg.webp", // 巴黎卢浮宫 (Day 10 is arrival in Paris + Louvre)
+            11: "https://blog-static.kkday.com/zh-hk/blog/wp-content/uploads/France_Paris_Eiffel-Tower_AFotolia_65117955-min-1-jpg.webp", // 凡尔赛宫 (Day 11 includes Versailles)
+            12: "https://blog-static.kkday.com/zh-hk/blog/wp-content/uploads/France_Paris_Eiffel-Tower_AFotolia_65117955-min-1-jpg.webp", // 巴黎街景/购物 (Day 12 is Paris free day)
+            13: "https://blog-static.kkday.com/zh-hk/blog/wp-content/uploads/France_Paris_Eiffel-Tower_AFotolia_65117955-min-1-jpg.webp"  // 机场/飞机 (Day 13 is departure)
+        };
+        
+        // 初始化背景图片
+        function initBackgroundImages() {
+            // Set highlight background first
+             const highlightsBg = document.getElementById('bg-image-highlights');
+             if (highlightsBg) {
+                highlightsBg.src = "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"; // Default highlights background
+                highlightsBg.alt = 'Highlights background';
+                if (document.querySelector('.day-nav-btn[data-day="highlights"].active')) {
+                     highlightsBg.classList.add('active');
+                 }
+            }
+
+            for (let day = 1; day <= 13; day++) {
+                const bgImage = document.getElementById(`bg-image-${day}`);
+                if (bgImage && backgroundImages[day]) {
+                    bgImage.src = backgroundImages[day];
+                    bgImage.alt = `Day ${day} background`;
+                     // Make the initially selected day's background active
+                     if (document.querySelector(`.day-nav-btn[data-day="${day}"].active`)) {
+                         bgImage.classList.add('active');
+                }
+                } else if (bgImage) {
+                    // Hide if no image specified
+                    bgImage.style.display = 'none';
+            }
+            }
+        }
+        
+        // 获取当前显示的天数或标识符 (如 'highlights')
+        function getCurrentDayIdentifier() {
+            const activeButton = document.querySelector('.day-nav-btn.active');
+            return activeButton ? activeButton.getAttribute('data-day') : 'highlights'; // Default to highlights
+        }
+        
+        // 更新导航按钮状态
+        function updateNavigationButtons(dayIdentifier) {
+            const totalDays = 13;
+            const dayLinks = document.querySelectorAll('.day-content .navigation-links'); // Select links within each day's content
+
+             dayLinks.forEach(navSection => {
+                const prevBtn = navSection.querySelector('.nav-btn.prev-btn');
+                const nextBtn = navSection.querySelector('.nav-btn.next-btn');
+                const dayIndicator = navSection.querySelector('.day-indicator');
+                const currentDayElem = dayIndicator.querySelector('.current-day');
+                const totalDaysElem = dayIndicator.querySelector('.total-days');
+                const dayIndicatorText = dayIndicator.querySelector('span:not(.current-day):not(.total-days)'); // For highlights page
+
+                 let currentDayNumber = 0;
+                 if (dayIdentifier !== 'highlights') {
+                     currentDayNumber = parseInt(dayIdentifier);
+                 }
+
+                 // Handle Day Indicator Display
+                 if (currentDayNumber > 0) {
+                     if(currentDayElem) currentDayElem.textContent = currentDayNumber;
+                     if(totalDaysElem) totalDaysElem.textContent = `/ ${totalDays}`;
+                     if(currentDayElem) currentDayElem.style.display = 'inline';
+                     if(totalDaysElem) totalDaysElem.style.display = 'inline';
+                     if(dayIndicatorText) dayIndicatorText.style.display = 'none'; // Hide '行程精华' text
+                 } else {
+                     // Handle Highlights Page Indicator
+                     if(currentDayElem) currentDayElem.style.display = 'none';
+                     if(totalDaysElem) totalDaysElem.style.display = 'none';
+                     if(dayIndicatorText) {
+                         dayIndicatorText.textContent = '行程精华';
+                         dayIndicatorText.style.display = 'inline';
+                     }
+                 }
+
+                 // Update Prev Button
+            if (prevBtn) {
+                     if (currentDayNumber <= 1 && dayIdentifier !== 'highlights') { // Hide if Day 1
+                        let prevDayId = 'highlights'; // Previous from Day 1 is highlights
+                        const prevDayButton = document.querySelector(`.day-nav-btn[data-day="${prevDayId}"]`);
+                         if(prevDayButton) {
+                              prevBtn.querySelector('span').textContent = prevDayButton.textContent;
+                              prevBtn.style.visibility = 'visible';
+                } else {
+                             prevBtn.style.visibility = 'hidden';
+                         }
+                     } else if (dayIdentifier === 'highlights') { // Hide if Highlights
+                         prevBtn.style.visibility = 'hidden';
+                     }
+                     else { // Show for Day 2 onwards
+                         let prevDayId = currentDayNumber - 1;
+                         const prevDayButton = document.querySelector(`.day-nav-btn[data-day="${prevDayId}"]`);
+                         if(prevDayButton) {
+                              prevBtn.querySelector('span').textContent = prevDayButton.textContent;
+                    prevBtn.style.visibility = 'visible';
+                         } else {
+                              prevBtn.style.visibility = 'hidden';
+                         }
+                }
+            }
+            
+                 // Update Next Button
+            if (nextBtn) {
+                     if (currentDayNumber >= totalDays) { // Hide if Last Day
+                    nextBtn.style.visibility = 'hidden';
+                     } else { // Show otherwise
+                         let nextDayId;
+                         if (dayIdentifier === 'highlights') {
+                             nextDayId = 1; // Next from highlights is Day 1
+                } else {
+                            nextDayId = currentDayNumber + 1;
+                         }
+                         const nextDayButton = document.querySelector(`.day-nav-btn[data-day="${nextDayId}"]`);
+                         if (nextDayButton) {
+                             nextBtn.querySelector('span').textContent = nextDayButton.textContent;
+                    nextBtn.style.visibility = 'visible';
+                         } else {
+                            nextBtn.style.visibility = 'hidden';
+                }
+            }
+                 }
+            });
+        }
+        
+        // 为当前活动日期内容添加展开/折叠按钮
+        function applyReadMoreButtons() {
+            // 只处理当前活动的内容
+            const currentContentElement = document.querySelector('.day-content.active');
+            if (!currentContentElement) return;
+
+            const currentTimelineContents = currentContentElement.querySelectorAll('.timeline-content');
+            const mobileMaxWidth = 767;
+            
+            // 只在移动端执行
+            if (window.innerWidth > mobileMaxWidth) return;
+            
+            currentTimelineContents.forEach(content => {
+                // 查找描述段落 (更健壮的查找方式)
+                 const possibleDescriptionParas = content.querySelectorAll(':scope > p:not(:first-child)'); // Find P elements directly under timeline-content, excluding first p if any
+                 let descriptionPara = null;
+                 // Find the first paragraph after the tags, or just the first paragraph if no tags
+                const tagsDiv = content.querySelector('.tags');
+                if (tagsDiv && tagsDiv.nextElementSibling && tagsDiv.nextElementSibling.tagName === 'P') {
+                    descriptionPara = tagsDiv.nextElementSibling;
+                 } else if (content.querySelector('h3') && content.querySelector('h3').nextElementSibling && content.querySelector('h3').nextElementSibling.tagName === 'P') {
+                    descriptionPara = content.querySelector('h3').nextElementSibling; // Often follows h3
+                 } else if (possibleDescriptionParas.length > 0) {
+                    // Fallback: Find first P that isn't part of a sub-section
+                     descriptionPara = Array.from(possibleDescriptionParas).find(p =>
+                         !p.closest('.service-highlights, .price-info, .hotel-info, .activity-options, .dining-recommendations, .notice, .checklist, .travel-tips, .shopping-recommendations, .farewell-message')
+                    );
+                }
+                
+                if (!descriptionPara) return;
+                
+                // Add description-text class if not present
+                if (!descriptionPara.classList.contains('description-text')) {
+                descriptionPara.classList.add('description-text');
+                }
+                
+                // Remove existing button to prevent duplicates
+                const existingBtn = content.querySelector('.read-more-btn');
+                if (existingBtn) {
+                    existingBtn.remove();
+                }
+                
+                // Reset expanded state visually for recalculation
+                content.classList.remove('expanded');
+                 // We need to ensure the element is rendered and styles applied before checking scrollHeight vs clientHeight
+                 requestAnimationFrame(() => { // Use requestAnimationFrame for better timing
+                     // Temporarily remove max-height to measure full height accurately
+                     const originalMaxHeight = descriptionPara.style.maxHeight;
+                     descriptionPara.style.maxHeight = 'none';
+                     const isOverflowing = descriptionPara.scrollHeight > parseFloat(getComputedStyle(descriptionPara).lineHeight) * 4; // Check if taller than ~4 lines
+                     descriptionPara.style.maxHeight = originalMaxHeight || ''; // Restore original or default
+
+                     if (isOverflowing && !content.querySelector('.read-more-btn')) { // Check again if button exists before adding
+                        const button = document.createElement('button');
+                        button.textContent = '展开';
+                        button.classList.add('read-more-btn');
+                        
+                        button.addEventListener('click', function() {
+                            const targetContent = this.closest('.timeline-content'); // Ensure correct content element
+                             targetContent.classList.toggle('expanded');
+                             this.textContent = targetContent.classList.contains('expanded') ? '收起' : '展开';
+                        });
+                        
+                         // Insert button after the paragraph
+                        descriptionPara.parentNode.insertBefore(button, descriptionPara.nextSibling);
+                    }
+                     // Ensure initial state is collapsed if button is added
+                     if (content.querySelector('.read-more-btn') && !content.classList.contains('expanded')) {
+                        descriptionPara.style.maxHeight = '6em'; // Re-apply collapsed height if needed
+                     }
+                 });
+            });
+        }
+        
+        // 处理天数导航按钮点击
+        document.addEventListener('DOMContentLoaded', function() {
+            initBackgroundImages(); // Initialize backgrounds first
+            
+            const dayButtons = document.querySelectorAll('.day-nav-btn');
+            const dayContents = document.querySelectorAll('.day-content');
+            const bgImages = document.querySelectorAll('.bg-image');
+            
+            const initialDayIdentifier = getCurrentDayIdentifier();
+            updateNavigationButtons(initialDayIdentifier); // Set initial nav button states
+            applyReadMoreButtons(); // Apply read-more to initially active content
+            
+            dayButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const dayIdentifier = this.getAttribute('data-day');
+                    
+                    // Update active button
+                    dayButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update displayed content
+                    dayContents.forEach(content => content.classList.remove('active'));
+                    const activeContent = document.getElementById(`day-${dayIdentifier}-content`);
+                    if (activeContent) {
+                        activeContent.classList.add('active');
+                    }
+                    
+                    // Update background image
+                    bgImages.forEach(img => img.classList.remove('active'));
+                    const activeBg = document.getElementById(`bg-image-${dayIdentifier}`);
+                    if (activeBg) {
+                        activeBg.classList.add('active');
+                    } else if (dayIdentifier === 'highlights') {
+                        // Special case for highlights background if it's separate
+                         const highlightsBg = document.getElementById('bg-image-highlights');
+                         if (highlightsBg) highlightsBg.classList.add('active');
+                    }
+
+                    // Update navigation buttons (Prev/Next links within content)
+                    updateNavigationButtons(dayIdentifier);
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll
+                    
+                    // Apply read more buttons to the newly active content after a short delay
+                    setTimeout(applyReadMoreButtons, 100); // Delay to ensure content is visible
+                });
+            });
+
+             // Re-apply read more on window resize (for mobile<->desktop changes)
+             let resizeTimer;
+             window.addEventListener('resize', () => {
+                 clearTimeout(resizeTimer);
+                 resizeTimer = setTimeout(() => {
+                     applyReadMoreButtons();
+                 }, 250);
+            });
+        });
+    </script>
+    
+    <!-- 为上一天/下一天按钮添加事件监听 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Use event delegation on the container for efficiency
+             const container = document.querySelector('.container');
+
+             container.addEventListener('click', function(e) {
+                 // Check if the clicked element is a prev/next button or inside one
+                 const button = e.target.closest('.nav-btn[data-action]');
+                 
+                 if (button) {
+                     e.preventDefault(); // Prevent default anchor behavior
+                    
+                     const action = button.getAttribute('data-action');
+                     const currentDayIdentifier = getCurrentDayIdentifier();
+                     let targetDayIdentifier;
+                     const totalDays = 13;
+                    
+                    if (action === 'prev') {
+                         if (currentDayIdentifier === '1') {
+                             targetDayIdentifier = 'highlights';
+                         } else if (currentDayIdentifier !== 'highlights') {
+                             targetDayIdentifier = Math.max(1, parseInt(currentDayIdentifier) - 1).toString();
+                         } else {
+                             return; // Already at highlights, cannot go further back
+                         }
+                    } else if (action === 'next') {
+                         if (currentDayIdentifier === 'highlights') {
+                             targetDayIdentifier = '1';
+                    } else {
+                             const currentDayNumber = parseInt(currentDayIdentifier);
+                             if (currentDayNumber < totalDays) {
+                                 targetDayIdentifier = (currentDayNumber + 1).toString();
+                             } else {
+                                 return; // Already at the last day
+                             }
+                         }
+                     } else {
+                         return; // Should not happen with current HTML
+                     }
+                     
+                     // Find and click the corresponding day navigation button
+                     const targetButton = document.querySelector(`.day-nav-btn[data-day="${targetDayIdentifier}"]`);
+                    if (targetButton) {
+                         targetButton.click(); // Simulate click on the top nav button
+                     }
+                    }
+            });
+        });
+    </script>
+</body>
+</html>
